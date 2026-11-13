@@ -1,0 +1,20 @@
+[project]
+name = "nl2cnl"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Malachy23", email = "malachy.parisi04@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "litellm>=1.109.1",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+nl2cnl = "nl2cnl:main"
+
+[build-system]
+requires = ["uv_build>=0.13.8,<0.14.0"]
+build-backend = "uv_build"
