@@ -1,17 +1,14 @@
 from dotenv import load_dotenv
-from litellm import completion
+from prompt.prompt_model import prompt_model
 
 load_dotenv()
 
-m = [
+model = "ollama_chat/qwen3.5:4b"
+
+messages = [
     {"role": "user", "content": "What is 1+1?"}
 ]
 
-answer = completion(
-    model="ollama_chat/qwen3.5:4b",
-    messages=m,
-    temperature=0
-)
+text = prompt_model(model, messages)
 
-text = answer.choices[0].message.content
 print(text)
