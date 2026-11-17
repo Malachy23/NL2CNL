@@ -12,10 +12,10 @@ check_args(args)
 processed = process_args(args)
 
 
-model = "ollama_chat/qwen3.5:4b"
+model = processed.model
 
 messages = [
-    {"role": "user", "content": "What is 1+1?"}
+    {"role": "user", "content": processed.text}
 ]
 
 text = prompt_model(model, messages)

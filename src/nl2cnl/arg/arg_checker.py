@@ -1,3 +1,7 @@
+from pathlib import Path
+from sys import exit, stderr
+
+
 class InvalidArgumentError(Exception):
     pass
 
@@ -6,23 +10,27 @@ class InvalidArgumentError(Exception):
 def check_model(model):
     pass
 
-# TODO: This needs to check if the file exists. Needs to be applied for the .yaml and the --input file
-# if provided
-def check_file_existence(path):
-    pass
+# Checks whether the file has the expected extension
+def check_file_suffix(file: Path, expected_suffix: str):
+    if file.suffix != expected_suffix:
+        raise InvalidArgumentError(f"File {file.name} has wrong suffix: it should be {expected_suffix}")
 
+# TODO: Change this name
 def check_input(args):
-    input_path = args.input
+    input = args.input
     text = args.text
 
-    if input_path == None and text == None:
+    if input is None and text is None:
         raise InvalidArgumentError("You need to provide at least one form of input, whether that is from CLI or from an input file")
-
-    if input_path != None:
-        check_file_existence(input_path)
+    if input is not None:
+        check_file_suffix(input, ".txt")
 
 def check_args(args):
-    check_model(args.model)
-    check_input(args)
-    check_file_existence(args.yaml)
-    
+    try:
+        check_model(args.model)
+        check_input(args)
+        check_file_suffix(args.yaml, ".yaml")
+
+    except InvalidArgumentError as e:
+        print(f"Error: {e}", file=stderr)
+        exit(2)

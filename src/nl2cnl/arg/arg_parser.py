@@ -1,12 +1,20 @@
 import argparse
+from pathlib import Path
 
+
+# TODO: Add trivial comment
+def existing_file(path_str: str) -> Path:
+    path = Path(path_str)
+    if not path.is_file():
+        raise argparse.ArgumentTypeError(f"File not found: {path_str}")
+    return path
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Hello")
 
     parser.add_argument(
         "-i", "--input",
-        type=str,
+        type=existing_file,
         default=None,
         help="specify file to extract queries from"
     )
@@ -34,7 +42,7 @@ def parse_args():
 
     parser.add_argument(
         "-y", "--yaml",
-        type=str,
+        type=existing_file,
         required=True,
         help="specify the location of the .yaml grammar definition file"
     )
