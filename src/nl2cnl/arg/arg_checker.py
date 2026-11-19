@@ -19,11 +19,14 @@ def check_file_suffix(file: Path, expected_suffix: str):
 def check_input(args):
     input = args.input
     text = args.text
+    test = args.test
 
-    if input is None and text is None:
-        raise InvalidArgumentError("You need to provide at least one form of input, whether that is from CLI or from an input file")
     if input is not None:
         check_file_suffix(input, ".txt")
+    elif text is not None and text == "":
+        raise InvalidArgumentError("Provided prompt is empty")
+    elif test is not None:
+        check_file_suffix(test, ".json")
 
 def check_args(args):
     try:
