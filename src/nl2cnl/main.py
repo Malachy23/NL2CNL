@@ -1,6 +1,5 @@
 from arg.arg_checker import check_args
 from arg.arg_parser import parse_args
-from arg.arg_processer import process_args
 from dotenv import load_dotenv
 from prompt.prompt_model import prompt_model
 
@@ -14,20 +13,19 @@ def main():
     # --- ARG PHASE
     args = parse_args()
     check_args(args)
-    processed = process_args(args)
     # ---
 
-    # --- INPUT FORMAT PHASE
+    # --- INPUT FORMATTING PHASE
     items = format_input(args)
     # ---
 
     # --- SYS PROMPT PHASE
-    prompt_strategy = get_strategy(processed.strategy)
-    prompt_strategy.setup(processed.yaml)
+    prompt_strategy = get_strategy(args.strategy)
+    prompt_strategy.setup(args.yaml)
     # ---
 
     # --- PROMPTING PHASE 
-    model = processed.model
+    model = args.model
 
     for item in items:
         system_prompt = prompt_strategy.get_system_prompt(item.nl_input)
@@ -42,15 +40,12 @@ def main():
 
     # --- TEST PHASE
 
-
     # ---
 
     # --- OUTPUT PHASE
-    if args.output is None:
+    if not args.no_output:
         for item in items:
-            print(item.model_output.text)
-    else:
-        pass # Writes output in file
+            print(f"{item.id}: {item.model_output.text}")
     # ---
 
 if __name__ == "__main__":

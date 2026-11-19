@@ -78,13 +78,10 @@ def parse_args() -> argparse.Namespace:
         help=f"IDK how to explain it. Choiches are: {', '.join(AVAILABLE_STRATEGIES)}. (default: raw)",
     )
     options_group.add_argument(
-        "-o", "--output",
-        type=Path,
-        default=None,
-        help=(
-            "Output path. For -t/-i, writes translations to this file (prints to stdout if omitted). "
-            "For --test, it is yet to be determined."
-        ),
+        "--no-output",
+        action="store_true",
+        default=False,
+        help="Suppress printing model outputs to stdout (useful during --test benchmarks).",
     )
 
     return parser.parse_args()
