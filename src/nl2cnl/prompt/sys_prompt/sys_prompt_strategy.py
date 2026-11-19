@@ -1,13 +1,11 @@
 from abc import ABC, abstractmethod
 
-from nl2cnl.file_opener import open_file
-
 
 # I don't yet know how this will look in the future
 # It is likely going to change
 class SystemPromptStrategy(ABC):
     @abstractmethod
-    def setup(self, file: str) -> None:
+    def setup(self, path: str) -> None:
         pass
 
     @abstractmethod
@@ -19,8 +17,9 @@ class RawFileStrategy(SystemPromptStrategy):
     def __init__(self):
         self.specification = ""
 
-    def setup(self, file: str) -> None:
-        self.specification = open_file(file)
+    def setup(self, path: str) -> None:
+        with open(path, "r") as file:
+            self.specification = file.read()
 
     def get_system_prompt(self, user_prompt: str) -> str:
         return f"""You are a formal translator that converts natural language input into a Controlled Natural Language (CNL) strictly conforming to the provided YAML grammar specification.
