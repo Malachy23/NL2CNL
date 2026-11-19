@@ -1,0 +1,146 @@
+# BioQueryCNL specification
+# https://github.com/seven-stars-0/BioQueryCNL
+
+start:
+  syntax: query
+  target: [asp]
+
+type:
+  - name: one_word_type
+    syntax: string
+  - name: two_words_type
+    syntax: string "-" string
+  
+instance:
+  syntax:
+    - string
+
+entity:
+  syntax:
+    - type instance
+
+verb:
+  syntax:
+    - string
+
+positive_number:
+  syntax:
+    - number
+
+of_relation:
+  - name: no_instance
+    syntax: >
+      type "of the" type
+
+  - name: with_instance
+    syntax: >
+      type "of the" entity
+
+query:
+  syntax:
+    - >
+      yes_no "?."
+    - >
+      wh "?."
+
+yes_no:
+  syntax:
+    - is_are
+    - do_does
+
+wh:
+  syntax:
+    - what
+    - which
+
+is_are:
+  syntax: >
+    ("Is" | "Are") entity verb
+
+do_does:
+  syntax:
+    - ("Do" | "Does") entity or_relation
+  
+what:
+  - name: what_of_relation
+    syntax: >
+      "What" ("is" | "are") "the" of_relation "that" or_relation
+  - name: what_type
+    syntax: >
+      "What" ("is" | "are") "the" type "that" or_relation
+
+which:
+  syntax: >
+    "Which" type or_relation
+
+or_relation:
+  syntax: and_relation
+  concat: ("or" | "or that")
+
+and_relation:
+  syntax: predicate_relation
+  concat: ("and" | "and that")
+
+predicate_relation:
+  syntax:
+    - active_quantified_of_relation
+    - passive_quantified_of_relation
+    - active_relation
+    - passive_relation
+    - active_quantified_relation
+    - passive_quantified_relation
+
+active_relation:
+  - name: active_of_relation
+    syntax: >
+      verb "the" of_relation
+  - name: active_relation_existence
+    syntax: >
+      verb "with"? "the" entity
+  - name: active_unary_relation
+    syntax: >
+      ("is" | "are") verb
+  
+passive_relation:
+  - name: passive_relation_existence
+    syntax: '("is" | "are") verb ("by" | "to") "the" entity'
+  - name: passive_of_relation
+    syntax: '("is" | "are") verb ("by" | "to") "the" of_relation'
+  
+operation:
+  - name: active_quantified_of_relation
+    operators:
+      at least: ">="
+      at most: "<="
+      more than: ">"
+      less than: "<"
+      exactly: "="
+    syntax:
+      verb active_quantified_relation_operator positive_number of_relation
+  - name: passive_quantified_of_relation
+    operators:
+      at least: ">="
+      at most: "<="
+      more than: ">"
+      less than: "<"
+      exactly: "="
+    syntax:
+      ("is" | "are") verb ("by" | "to") passive_quantified_relation_operator positive_number of_relation
+  - name: active_quantified_relation
+    operators:
+      at least: ">="
+      at most: "<="
+      more than: ">"
+      less than: "<"
+      exactly: "="
+    syntax:
+      verb active_quantified_relation_operator positive_number type
+  - name: passive_quantified_relation
+    operators:
+      at least: ">="
+      at most: "<="
+      more than: ">"
+      less than: "<"
+      exactly: "="
+    syntax:
+      ("is" | "are") verb ("by" | "to") passive_quantified_relation_operator positive_number type

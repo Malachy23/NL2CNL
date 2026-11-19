@@ -1,3 +1,4 @@
+from nl2cnl.file_opener import open_file
 from arg.arg_checker import check_args
 from arg.arg_parser import parse_args
 from arg.arg_processer import process_args
@@ -10,6 +11,8 @@ load_dotenv()
 args = parse_args()
 check_args(args)
 processed = process_args(args)
+
+print( open_file(args.yaml) )
 
 
 model = processed.model

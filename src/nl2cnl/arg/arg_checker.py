@@ -7,7 +7,7 @@ class InvalidArgumentError(Exception):
 
 # TODO: This needs to check whether the user-chosed model actually exists (from LiteLLM perspective)
 # and if not local it should check whether the user imported the appropriate API-KEYS in the .env
-def check_model(model):
+def check_model_availability(model: str):
     pass
 
 # Checks whether the file has the expected extension
@@ -27,7 +27,7 @@ def check_input(args):
 
 def check_args(args):
     try:
-        check_model(args.model)
+        check_model_availability(args.model)
         check_input(args)
         check_file_suffix(args.yaml, ".yaml")
 
