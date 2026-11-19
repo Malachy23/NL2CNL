@@ -7,10 +7,6 @@ from nl2cnl.file_opener import open_file
 # It is likely going to change
 class SystemPromptStrategy(ABC):
     @abstractmethod
-    def signature(self) -> str:
-        pass
-
-    @abstractmethod
     def setup(self, file: str) -> None:
         pass
 
@@ -22,9 +18,6 @@ class SystemPromptStrategy(ABC):
 class RawFileStrategy(SystemPromptStrategy):
     def __init__(self):
         self.specification = ""
-
-    def signature(self) -> str:
-        return "raw_file"
 
     def setup(self, file: str) -> None:
         self.specification = open_file(file)
@@ -46,3 +39,12 @@ class RawFileStrategy(SystemPromptStrategy):
         Grammar specification:
         {self.specification}
         """
+
+# Returns the strategy choosen by CLI (default: raw)
+def choose_strategy(signature: str) -> SystemPromptStrategy:
+    strategies = {
+        "raw": RawFileStrategy
+        # To be added...
+    } 
+
+    return strategies[signature]()
