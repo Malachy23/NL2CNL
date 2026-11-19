@@ -15,7 +15,7 @@ class SystemPromptStrategy(ABC):
         pass
 
     @abstractmethod
-    def get_system_prompt(self) -> str:
+    def get_system_prompt(self, user_prompt: str) -> str:
         pass
 
 # Give the LLM the raw grammar specification file
@@ -29,7 +29,7 @@ class RawFileStrategy(SystemPromptStrategy):
     def setup(self, file: str) -> None:
         self.specification = open_file(file)
 
-    def get_system_prompt(self) -> str:
+    def get_system_prompt(self, user_prompt: str) -> str:
         return f"""You are a formal translator that converts natural language input into a Controlled Natural Language (CNL) strictly conforming to the provided YAML grammar specification.
 
         How to read and apply the grammar specification:
