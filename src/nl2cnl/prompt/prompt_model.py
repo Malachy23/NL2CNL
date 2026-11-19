@@ -1,11 +1,17 @@
 from litellm import completion
 
-# Takes model, an array of messages and temperature, and returns the text produced by the LLM
-def prompt_model(model: str, messages, temperature=0):
-    answer = completion(
+
+def prompt_model(model: str, messages: list[dict], temperature: float = 0.1) -> str:
+    response = completion(
         model=model,
         messages=messages,
-        temperature=temperature
+        temperature=temperature,
+        max_tokens=2048,
+        extra_body={
+            "think": False,
+            "options": {"num_ctx": 8192},
+        },
     )
+    # print("Raw response:", response.model_dump_json(indent=2))
 
-    return answer.choices[0].message.content
+    return (response.choices[0].message.content or "").strip()

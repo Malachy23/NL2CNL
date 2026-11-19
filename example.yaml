@@ -144,3 +144,19 @@ operation:
       exactly: "="
     syntax:
       ("is" | "are") verb ("by" | "to") passive_quantified_relation_operator positive_number type
+
+# Examples: 
+# Input: Symptoms alleviated by Epinephrine
+# Output: Which symptoms are alleviated by the drug Epinephrine?
+#
+# Input: Side effects of drugs treating asthma
+# Output: What are the side-effects of the drugs that treat the disease Asthma?
+#
+# Input: genes related to asthma and targeted by epinephrine
+# Output: What are the genes that are related to the disease Asthma and are targeted by the drug Epinephrine?
+#
+# Input: Symptoms of diseases related to ADRB1 or treated by epinephrine
+# Output: What are the symptoms of the diseases that are related to the gene ADRB1 or that are treated by the drug Epinephrine?
+#
+# Input: I want to know genes targeted by at least two drugs and related to max three diseases
+# Output: Which genes are targeted by at least 2 drugs and are related to at most 3 diseases?
