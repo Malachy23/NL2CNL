@@ -14,7 +14,7 @@ class SystemPromptStrategy(ABC):
     def get_system_prompt(self, user_prompt: str) -> str:
         pass
 
-# Give the LLM the raw grammar specification file
+# Gives the LLM the raw grammar specification file
 class RawFileStrategy(SystemPromptStrategy):
     def __init__(self):
         self.specification = ""
@@ -41,7 +41,7 @@ class RawFileStrategy(SystemPromptStrategy):
         """
 
 # Returns the strategy choosen by CLI (default: raw)
-def choose_strategy(signature: str) -> SystemPromptStrategy:
+def get_strategy(signature: str) -> SystemPromptStrategy:
     strategies = {
         "raw": RawFileStrategy
         # To be added...

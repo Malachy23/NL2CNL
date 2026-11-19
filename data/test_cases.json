@@ -1,0 +1,35 @@
+{
+    "grammar": "BioQueryCNL",
+    "cases": [
+        {
+            "id": 1,
+            "nl_input" : "Caio",
+            "expected_cnl": "ble"
+        },
+        {
+            "id": 2,
+            "nl_input" : "Caio",
+            "expected_cnl": "ble"
+        },
+        {
+            "id": 3,
+            "nl_input" : "Caio",
+            "expected_cnl": "ble"
+        },
+        {
+            "id": 4,
+            "nl_input" : "Caio",
+            "expected_cnl": "ble"
+        },
+        {
+            "id": 5,
+            "nl_input" : "Caio",
+            "expected_cnl": "ble"
+        },
+        {
+            "id": 6,
+            "nl_input" : "Caio",
+            "expected_cnl": "ble"
+        }
+    ]
+}
