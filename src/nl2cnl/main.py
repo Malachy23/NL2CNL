@@ -1,10 +1,11 @@
-from arg.arg_checker import check_args
-from arg.arg_parser import parse_args
 from dotenv import load_dotenv
-from prompt.prompt_model import prompt_model
 
+from nl2cnl.arg.arg_checker import check_args
+from nl2cnl.arg.arg_parser import parse_args
 from nl2cnl.input_formatter import format_input
+from nl2cnl.prompt.prompt_model import prompt_model
 from nl2cnl.prompt.sys_prompt.sys_prompt_strategy import get_strategy
+from nl2cnl.test import test_output
 
 
 def main():
@@ -39,7 +40,8 @@ def main():
     # ---
 
     # --- TEST PHASE
-
+    if args.test is not None:
+        test_output(args, items)
     # ---
 
     # --- OUTPUT PHASE

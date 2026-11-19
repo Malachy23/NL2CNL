@@ -18,7 +18,8 @@ def format_input(args) -> list[PromptItem]:
 
     elif args.test is not None:
         with open(args.test, "r", encoding="utf-8") as f:
-            raw_tests = load(f)
+            data = load(f)
+            raw_tests = data["cases"] if isinstance(data, dict) else data
             items = [PromptItem(**row) for row in raw_tests]
 
     return items
