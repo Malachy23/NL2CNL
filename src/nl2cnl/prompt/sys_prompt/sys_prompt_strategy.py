@@ -13,7 +13,7 @@ class SystemPromptStrategy(ABC):
         pass
 
 # Gives the LLM the raw grammar specification file
-class RawFileStrategy(SystemPromptStrategy):
+class RawStrategy(SystemPromptStrategy):
     def __init__(self):
         self.specification = ""
 
@@ -22,27 +22,71 @@ class RawFileStrategy(SystemPromptStrategy):
             self.specification = file.read()
 
     def get_system_prompt(self, user_prompt: str) -> str:
-        return f"""You are a formal translator that converts natural language input into a Controlled Natural Language (CNL) strictly conforming to the provided YAML grammar specification.
+        return f"""You are an expert NL2CNL translator. Your task is to translate
+        natural language input into a Controlled Natural Language (CNL) that
+        strictly conforms to the provided YAML grammar specification.
 
-        How to read and apply the grammar specification:
-        1. Root rule: Always start expanding from the `start` rule down to terminal tokens.
-        2. Literal tokens: Strings enclosed in double quotes (e.g., `"the"`, `"of the"`, `"?."`) are mandatory keywords or punctuation and MUST appear verbatim in the exact positions specified.
-        3. Alternatives: YAML lists (`- ...`) and pipes (`|`) represent mutually exclusive production branches; select the branch that best matches the semantic intent of the input.
-        4. Lexical terminals: Placeholders such as `string` or `number` must be instantiated with the corresponding words or values extracted from the user input.
-        5. Implicit slot resolution: If a production rule requires multiple adjacent slots (e.g., a classifier/type followed by an identifier/instance) and the user input omits one of them, infer the minimal missing grammatical slot from general linguistic context so that every required token of the rule is satisfied.
+        GRAMMAR INTERPRETATION AND APPLICATION
 
-        Output constraints:
-        - Output ONLY the final valid CNL sentence.
-        - Do NOT include explanations, parse trees, markdown formatting, or surrounding quotes.
+        1. Grammar entry point:
+        - Always begin derivation from the root rule named `start`.
+        - Expand production rules recursively until all symbols are terminal
+            tokens or lexical placeholders.
 
-        Grammar specification:
+        2. Terminal symbols:
+        - Strings enclosed in double quotes (e.g., `"the"`, `"of the"`,
+            `"?."`) represent literal terminal tokens.
+        - These tokens are mandatory and must appear exactly as specified,
+            including capitalization, spacing, and punctuation.
+
+        3. Production alternatives:
+        - YAML lists and pipe-separated expressions represent alternative
+            production branches.
+        - Select the branch that most accurately preserves the semantic
+            meaning of the input while satisfying the grammar.
+
+        4. Lexical placeholders:
+        - Replace placeholders such as `string`, `number`, or other
+            lexical terminals with the corresponding values extracted
+            from the input.
+        - Preserve entity names, identifiers, numbers, and relevant
+            semantic information from the original input.
+
+        5. Missing grammatical information:
+        - If a required grammatical slot is omitted from the input,
+            infer only the minimum information strictly necessary to
+            construct a valid grammatical expression.
+        - Prefer grammatically required defaults over speculative
+            assumptions.
+        - Never invent entities, identifiers, numerical values, or
+            semantic relationships.
+        - If a required slot cannot be inferred reliably, use the
+            most conservative grammatically valid interpretation.
+
+        6. Semantic preservation:
+        - Preserve the original intent and meaning of the input.
+        - Do not introduce, remove, or modify semantic constraints.
+        - Do not add information that is not explicitly stated or
+            strictly required by the grammar.
+
+        OUTPUT REQUIREMENTS
+
+        - Output exactly one valid CNL sentence.
+        - The output must be derivable from the `start` rule.
+        - Every terminal token must conform exactly to the grammar.
+        - Do not output explanations, comments, reasoning, parse trees,
+        markdown, or surrounding quotation marks.
+        - Do not include any text before or after the CNL sentence.
+
+        YAML GRAMMAR SPECIFICATION:
         {self.specification}
         """
+
 
 # Returns the strategy choosen by CLI (default: raw)
 def get_strategy(signature: str) -> SystemPromptStrategy:
     strategies = {
-        "raw": RawFileStrategy
+        "raw": RawStrategy
         # To be added...
     } 
 

@@ -1,6 +1,7 @@
-from litellm import get_llm_provider, validate_environment
 from pathlib import Path
 from sys import exit
+
+from litellm import get_llm_provider, validate_environment
 
 from nl2cnl.ui import CliUI
 

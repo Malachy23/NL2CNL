@@ -2,12 +2,12 @@
 import csv
 from datetime import datetime
 
+from lark import Lark, LarkError, UnexpectedInput
+
 from nl2cnl.prompt.prompt_item import PromptItem
 from nl2cnl.ui import CliUI
 
-from lark import Lark, UnexpectedInput, LarkError
-
-columns = ["id", "model", "strategy", "grammar_check", "match", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]
+columns = ["id", "model", "strategy", "syntax_valid", "match", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]
 
 p = Lark.open("grammar.lark", parser="lalr")
 
@@ -32,7 +32,7 @@ def method_to_be_named(args, processed_items: list[PromptItem]):
             "id": item.id,
             "model": args.model,
             "strategy": args.strategy,
-            "grammar_check": check_grammar(model_output.text),
+            "syntax_valid": check_grammar(model_output.text),
             "match": 1 if model_output.text in item.expected_cnl else 0,
             "prompt_tokens": model_output.prompt_tokens,
             "completion_tokens": model_output.completion_tokens,
