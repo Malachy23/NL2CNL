@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-AVAILABLE_STRATEGIES = ["raw"]
+AVAILABLE_STRATEGIES = ["raw", "example", "subgrammar"]
 
 # Validates that the provided CLI argument points to an existing file
 def existing_file(path_str: str) -> Path:
@@ -20,9 +20,9 @@ def parse_args() -> argparse.Namespace:
         ),
         epilog=(
             "Examples:\n"
-            "  Single query:   uv run src/nl2cnl/main.py -m ollama_chat/qwen3.5:4b -y example.yaml -t \"drugs related to asthma\"\n"
-            "  Batch queries:  uv run src/nl2cnl/main.py -m groq/qwen/qwen3-32b -y example.yaml -i queries.txt\n"
-            "  Benchmark run:  uv run src/nl2cnl/main.py -m openrouter/meta-llama/llama-3.3-70b-instruct:free -y example.yaml --test data/test_cases.json --no-output"
+            "  Single query:   uv run nl2cnl -m ollama_chat/qwen3.5:4b -y example.yaml -t \"drugs related to asthma\"\n"
+            "  Batch queries:  uv run nl2cnl -m groq/qwen/qwen3-32b -y example.yaml -i queries.txt\n"
+            "  Benchmark run:  uv run nl2cnl -m openrouter/meta-llama/llama-3.3-70b-instruct:free -y example.yaml --test data/test_cases.json --no-output"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -62,7 +62,7 @@ def parse_args() -> argparse.Namespace:
         help="Path to a plain text file containing one NL query per line (batch translation without evaluation).",
     )
     mode.add_argument(
-        "--test",
+        "-b", "--benchmark",
         type=existing_file,
         default=None,
         help="Path to a JSON test suite file (with expected CNL ground truth) to run evaluation metrics.",
@@ -71,6 +71,12 @@ def parse_args() -> argparse.Namespace:
 
     # --- PIPELINE & OUTPUT OPTIONS
     options_group = parser.add_argument_group("Pipeline & Output Options")
+    options_group.add_argument(
+        "-e", "--examples",
+        type=existing_file,
+        default=None,
+        help="Path to translation examples from NL to CNL."
+    )
     options_group.add_argument(
         "-s", "--strategy",
         type=str,

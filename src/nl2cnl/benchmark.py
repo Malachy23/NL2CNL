@@ -11,8 +11,7 @@ columns = ["id", "model", "strategy", "syntax_valid", "match", "prompt_tokens", 
 
 p = Lark.open("grammar.lark", parser="lalr")
 
-# TODO: RENAME
-def check_grammar(text: str) -> int:
+def is_syntax_valid(text: str) -> int:
     try:
         p.parse(text)
         return 1
@@ -21,7 +20,7 @@ def check_grammar(text: str) -> int:
     except LarkError:
         return 0
 
-def method_to_be_named(args, processed_items: list[PromptItem]):
+def evaluate_items(args, processed_items: list[PromptItem]):
     rows = []
 
     for item in CliUI().iter(processed_items, phase="Testing"):
@@ -32,7 +31,7 @@ def method_to_be_named(args, processed_items: list[PromptItem]):
             "id": item.id,
             "model": args.model,
             "strategy": args.strategy,
-            "syntax_valid": check_grammar(model_output.text),
+            "syntax_valid": is_syntax_valid(model_output.text),
             "match": 1 if model_output.text in item.expected_cnl else 0,
             "prompt_tokens": model_output.prompt_tokens,
             "completion_tokens": model_output.completion_tokens,
@@ -45,7 +44,7 @@ def method_to_be_named(args, processed_items: list[PromptItem]):
     return rows
 
 # Takes from granted that PromptItems have already been processed by LLM
-def test_output(args, processed_items: list[PromptItem]) -> None:
+def start_benchmark(args, processed_items: list[PromptItem]) -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     with open(f"./results/test-{timestamp}.csv", mode="w", newline="", encoding="utf-8") as file:
@@ -53,5 +52,5 @@ def test_output(args, processed_items: list[PromptItem]) -> None:
 
         writer.writeheader()
 
-        rows = method_to_be_named(args, processed_items)
+        rows = evaluate_items(args, processed_items)
         writer.writerows(rows)
