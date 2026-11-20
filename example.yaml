@@ -39,9 +39,9 @@ of_relation:
 query:
   syntax:
     - >
-      yes_no "?."
+      yes_no "?"
     - >
-      wh "?."
+      wh "?"
 
 yes_no:
   syntax:

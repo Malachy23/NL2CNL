@@ -14,3 +14,7 @@ results/*
 
 # Environment
 .env
+
+# Various
+grammar.lark
+example.yaml

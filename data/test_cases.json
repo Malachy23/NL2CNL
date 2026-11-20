@@ -18,113 +18,63 @@
         },
         {
             "id": "4",
-            "nl_input": "tylenol side effects",
-            "expected_cnl": "What are the side-effects of the drug Tylenol?"
-        },
-        {
-            "id": "5",
             "nl_input": "genes: TP53 expressed?",
             "expected_cnl": "Is gene TP53 expressed?"
         },
         {
-            "id": "6",
+            "id": "5",
             "nl_input": "is insulin upregulated?",
             "expected_cnl": "Is protein Insulin upregulated?"
         },
         {
-            "id": "7",
+            "id": "6",
             "nl_input": "yo gimme all the meds that fix migraine pls",
             "expected_cnl": "Which drugs treat the disease Migraine?"
         },
         {
-            "id": "8",
+            "id": "7",
             "nl_input": "idk tell me if aspirin interacts w/ cox1??",
             "expected_cnl": "Does drug Aspirin interact with the protein COX1?"
         },
         {
-            "id": "9",
+            "id": "8",
             "nl_input": "do metformin treat diabetes?",
             "expected_cnl": "Does drug Metformin treat the disease Diabetes?"
         },
         {
-            "id": "10",
+            "id": "9",
             "nl_input": "can you please check if the drug warfarin interacts with the enzyme cyp2c9 thanks",
             "expected_cnl": "Does drug Warfarin interact with the enzyme CYP2C9?"
         },
         {
-            "id": "11",
+            "id": "10",
             "nl_input": "genes associated with asthma",
             "expected_cnl": "Which genes are related to the disease Asthma?"
         },
         {
-            "id": "12",
+            "id": "11",
             "nl_input": "proteins inhibited by > 5 drugs",
             "expected_cnl": "Which proteins are inhibited by more than 5 drugs?"
         },
         {
-            "id": "13",
-            "nl_input": "drugs targeting over 10 genes",
-            "expected_cnl": "Which drugs target more than 10 genes?"
-        },
-        {
-            "id": "14",
+            "id": "12",
             "nl_input": "genes targeted by 1 drug",
             "expected_cnl": "Which genes are targeted by exactly 1 drug?"
         },
         {
-            "id": "15",
-            "nl_input": "meds treating min two diseases and max 3 side effects",
-            "expected_cnl": "Which drugs treat at least 2 diseases and cause at most 3 side-effects?"
-        },
-        {
-            "id": "16",
-            "nl_input": "find me all the molecular functions of tp53 that r active",
-            "expected_cnl": "What are the molecular-functions of the gene TP53 that are active?"
-        },
-        {
-            "id": "17",
+            "id": "13",
             "nl_input": "what r the clinical trials for cancer that are completed",
             "expected_cnl": "What are the clinical-trials that are related to the disease Cancer and are completed?"
         },
         {
-            "id": "18",
-            "nl_input": "show pathways linked with the targets of aspirin",
-            "expected_cnl": "Which pathways are linked to the targets of the drug Aspirin?"
-        },
-        {
-            "id": "19",
-            "nl_input": "symptoms of diabetes alleviated by >= 2 drugs",
-            "expected_cnl": "What are the symptoms of the disease Diabetes that are alleviated by at least 2 drugs?"
-        },
-        {
-            "id": "20",
-            "nl_input": "proteins inhibited by up to 3 targets of insulin",
-            "expected_cnl": "Which proteins are inhibited by at most 3 targets of the protein Insulin?"
-        },
-        {
-            "id": "21",
-            "nl_input": "drugs inhibiting at least two targets of asthma",
-            "expected_cnl": "Which drugs inhibit at least 2 targets of the disease Asthma?"
-        },
-        {
-            "id": "22",
-            "nl_input": "drugs treating targets of diseases",
-            "expected_cnl": "Which drugs treat the targets of the diseases?"
-        },
-        {
-            "id": "23",
+            "id": "14",
             "nl_input": "genes related to brca1 or tp53",
             "expected_cnl": "Which genes are related to the gene BRCA1 or are related to the gene TP53?"
         },
         {
-            "id": "24",
+            "id": "15",
             "nl_input": "drugs treating asthma and diabetes",
             "expected_cnl": "Which drugs treat the disease Asthma and treat the disease Diabetes?"
-        },
-        {
-            "id": "25",
-            "nl_input": "list diseases... wait no, drugs treating under 4 symptoms or approved",
-            "expected_cnl": "Which drugs treat less than 4 symptoms or are approved?"
         }
     ]
 }

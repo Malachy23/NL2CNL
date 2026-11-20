@@ -5,7 +5,21 @@ from datetime import datetime
 from nl2cnl.prompt.prompt_item import PromptItem
 from nl2cnl.ui import CliUI
 
-columns = ["id", "model", "strategy", "pass", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]
+from lark import Lark, UnexpectedInput, LarkError
+
+columns = ["id", "model", "strategy", "grammar_check", "match", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]
+
+p = Lark.open("grammar.lark", parser="lalr")
+
+# TODO: RENAME
+def check_grammar(text: str) -> int:
+    try:
+        p.parse(text)
+        return 1
+    except UnexpectedInput:
+        return 0
+    except LarkError:
+        return 0
 
 def method_to_be_named(args, processed_items: list[PromptItem], ui: CliUI):
     rows = []
@@ -19,7 +33,8 @@ def method_to_be_named(args, processed_items: list[PromptItem], ui: CliUI):
             "id": item.id,
             "model": args.model,
             "strategy": args.strategy,
-            "pass": 1 if model_output.text == item.expected_cnl else 0,
+            "grammar_check": check_grammar(model_output.text),
+            "match": 1 if model_output.text == item.expected_cnl else 0,
             "prompt_tokens": model_output.prompt_tokens,
             "completion_tokens": model_output.completion_tokens,
             "total_tokens": model_output.total_tokens,

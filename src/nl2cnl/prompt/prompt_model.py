@@ -34,7 +34,7 @@ def prompt_model(
     response = completion(
         model=model,
         messages=messages,
-        temperature=temperature,
+        #temperature=temperature,
         max_tokens=max_tokens,
         num_ctx=num_ctx,
         reasoning_effort=reasoning_effort,
