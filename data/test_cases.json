@@ -19,7 +19,7 @@
         {
             "id": "4",
             "nl_input": "tylenol side effects",
-            "expected_cnl": "Which side-effects are caused by the drug Tylenol?"
+            "expected_cnl": "What are the side-effects of the drug Tylenol?"
         },
         {
             "id": "5",
