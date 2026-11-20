@@ -6,49 +6,42 @@ from nl2cnl.input_formatter import format_input
 from nl2cnl.prompt.prompt_model import prompt_model
 from nl2cnl.prompt.sys_prompt.sys_prompt_strategy import get_strategy
 from nl2cnl.test import test_output
+from nl2cnl.ui import CliUI
 
 
 def main():
     load_dotenv()
-
-    # --- ARG PHASE
     args = parse_args()
     check_args(args)
-    # ---
 
-    # --- INPUT FORMATTING PHASE
-    items = format_input(args)
-    # ---
+    ui = CliUI()
+    ui.header(args.model, args.strategy)
 
-    # --- SYS PROMPT PHASE
-    prompt_strategy = get_strategy(args.strategy)
-    prompt_strategy.setup(args.yaml)
-    # ---
+    # --- INPUT FORMATTING
+    with ui.step("Formatting input"):
+        items = format_input(args)
 
-    # --- PROMPTING PHASE 
-    model = args.model
+    # --- STRATEGY SETUP
+    with ui.step(f"Setting up strategy ({args.yaml.name})"):
+        prompt_strategy = get_strategy(args.strategy)
+        prompt_strategy.setup(args.yaml)
 
-    for item in items:
-        system_prompt = prompt_strategy.get_system_prompt(item.nl_input)
-
+    # --- PROMPTING
+    for item in ui.iter(items, phase="Prompting"):
         messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": item.nl_input}
+            {"role": "system", "content": prompt_strategy.get_system_prompt(item.nl_input)},
+            {"role": "user", "content": item.nl_input},
         ]
+        item.model_output = prompt_model(args.model, messages)
 
-        item.model_output = prompt_model(model, messages)
-    # ---
-
-    # --- TEST PHASE
+    # --- TESTING
     if args.test is not None:
-        test_output(args, items)
-    # ---
+        test_output(args, items, ui)
 
-    # --- OUTPUT PHASE
+    # --- OUTPUT
     if not args.no_output:
-        for item in items:
-            print(f"{item.id}: {item.model_output.text}")
-    # ---
+        ui.print_results(items)
+
 
 if __name__ == "__main__":
     main()
