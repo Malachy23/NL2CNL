@@ -3,7 +3,7 @@ from pathlib import Path
 
 AVAILABLE_STRATEGIES = ["raw"]
 
-# Validate that the provided CLI argument points to an existing file
+# Validates that the provided CLI argument points to an existing file
 def existing_file(path_str: str) -> Path:
     path = Path(path_str)
     if not path.is_file():
@@ -16,13 +16,13 @@ def parse_args() -> argparse.Namespace:
         prog="nl2cnl",
         description=(
             "NL2CNL: Translate Natural Language (NL) queries into a Controlled Natural Language (CNL) "
-            "guided by a formal grammar specification, and run yet-to-be-determined tests."
+            "guided by a formal YAML grammar specification, and benchmark translation accuracy."
         ),
         epilog=(
             "Examples:\n"
-            "  Single query:   python main.py -m ollama/qwen3.5:4b -y grammars/bioquery.yaml -t \"drugs related to asthma\"\n"
-            "  Batch queries:  python main.py -m openai/gpt-4o -y grammars/bioquery.yaml -i queries.txt -o out.jsonl\n"
-            "  Benchmark run:  python main.py -m ollama/qwen3.5:4b -y grammars/bioquery.yaml --test datasets/bioquery.json -s raw"
+            "  Single query:   uv run src/nl2cnl/main.py -m ollama_chat/qwen3.5:4b -y example.yaml -t \"drugs related to asthma\"\n"
+            "  Batch queries:  uv run src/nl2cnl/main.py -m groq/qwen/qwen3-32b -y example.yaml -i queries.txt\n"
+            "  Benchmark run:  uv run src/nl2cnl/main.py -m openrouter/meta-llama/llama-3.3-70b-instruct:free -y example.yaml --test data/test_cases.json --no-output"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -33,7 +33,7 @@ def parse_args() -> argparse.Namespace:
         "-m", "--model",
         type=str,
         required=True,
-        help="LiteLLM model identifier (e.g., 'ollama/qwen3.5:4b', 'openai/gpt-4o', 'gemini/gemini-2.5-pro').",
+        help="LiteLLM model identifier (e.g., 'ollama_chat/qwen3.5:4b', 'groq/qwen/qwen3-32b', 'gemini/gemini-2.5-flash-lite').",
     )
     required_group.add_argument(
         "-y", "--yaml",
@@ -65,23 +65,28 @@ def parse_args() -> argparse.Namespace:
         "--test",
         type=existing_file,
         default=None,
-        help="Path to a JSON test suite file (with expected CNL ground truth) to run full evaluation metrics.",
+        help="Path to a JSON test suite file (with expected CNL ground truth) to run evaluation metrics.",
     )
+    # ---
 
-    # --- 3. OPZIONI PIPELINE E OUTPUT ---
+    # --- PIPELINE & OUTPUT OPTIONS
     options_group = parser.add_argument_group("Pipeline & Output Options")
     options_group.add_argument(
         "-s", "--strategy",
         type=str,
         choices=AVAILABLE_STRATEGIES,
         default="raw",
-        help=f"IDK how to explain it. Choiches are: {', '.join(AVAILABLE_STRATEGIES)}. (default: raw)",
+        help=(
+            "Grammar injection and retrieval strategy used to build the system prompt "
+            f"(available: {', '.join(AVAILABLE_STRATEGIES)}). (default: %(default)s)"
+        ),
     )
     options_group.add_argument(
         "--no-output",
         action="store_true",
         default=False,
-        help="Suppress printing model outputs to stdout (useful during --test benchmarks).",
+        help="Suppress printing translated CNL sentences to stdout.",
     )
+    # ---
 
     return parser.parse_args()

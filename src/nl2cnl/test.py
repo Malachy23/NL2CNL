@@ -54,5 +54,5 @@ def test_output(args, processed_items: list[PromptItem]) -> None:
 
         writer.writeheader()
 
-        rows = method_to_be_named(args, processed_items, ui)
+        rows = method_to_be_named(args, processed_items)
         writer.writerows(rows)
