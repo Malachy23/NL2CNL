@@ -17,11 +17,20 @@ T = TypeVar("T")
 
 
 class CliUI:
-    def __init__(self):
-        self.console = Console()
+    _instance: "CliUI | None" = None
+    console: Console
+
+    def __new__(cls) -> "CliUI":
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.console = Console()
+        return cls._instance
 
     def header(self, model: str, strategy: str) -> None:
         self.console.print(f"[bold cyan]NL2CNL[/] - [dim]model: {model}, strategy: {strategy}[/]\n")
+
+    def error(self, message: str) -> None:
+        self.console.print(f"[bold red]✗[/] [red]{message}[/]")
 
     @contextmanager
     def step(self, label: str) -> Iterator[None]:

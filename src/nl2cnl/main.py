@@ -14,20 +14,19 @@ def main():
     args = parse_args()
     check_args(args)
 
-    ui = CliUI()
-    ui.header(args.model, args.strategy)
+    CliUI().header(args.model, args.strategy)
 
     # --- INPUT FORMATTING
-    with ui.step("Formatting input"):
+    with CliUI().step("Formatting input"):
         items = format_input(args)
 
     # --- STRATEGY SETUP
-    with ui.step(f"Setting up strategy ({args.yaml.name})"):
+    with CliUI().step(f"Setting up strategy ({args.yaml.name})"):
         prompt_strategy = get_strategy(args.strategy)
         prompt_strategy.setup(args.yaml)
 
     # --- PROMPTING
-    for item in ui.iter(items, phase="Prompting"):
+    for item in CliUI().iter(items, phase="Prompting"):
         messages = [
             {"role": "system", "content": prompt_strategy.get_system_prompt(item.nl_input)},
             {"role": "user", "content": item.nl_input},
@@ -36,11 +35,11 @@ def main():
 
     # --- TESTING
     if args.test is not None:
-        test_output(args, items, ui)
+        test_output(args, items)
 
     # --- OUTPUT
     if not args.no_output:
-        ui.print_results(items)
+        CliUI().print_results(items)
 
 
 if __name__ == "__main__":

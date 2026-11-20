@@ -21,11 +21,11 @@ def check_grammar(text: str) -> int:
     except LarkError:
         return 0
 
-def method_to_be_named(args, processed_items: list[PromptItem], ui: CliUI):
+def method_to_be_named(args, processed_items: list[PromptItem]):
     rows = []
 
     # This is horrible, but temporary
-    for item in ui.iter(processed_items, phase="Testing"):
+    for item in CliUI().iter(processed_items, phase="Testing"):
         model_output = item.model_output
         assert model_output
 
@@ -46,7 +46,7 @@ def method_to_be_named(args, processed_items: list[PromptItem], ui: CliUI):
     return rows
 
 # Takes from granted that PromptItems have already been processed by LLM
-def test_output(args, processed_items: list[PromptItem], ui: CliUI) -> None:
+def test_output(args, processed_items: list[PromptItem]) -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     with open(f"./results/test-{timestamp}.csv", mode="w", newline="", encoding="utf-8") as file:
