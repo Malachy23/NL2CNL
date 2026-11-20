@@ -7,5 +7,5 @@ from nl2cnl.prompt.prompt_model import PromptResult
 class PromptItem:
     id: str
     nl_input: str
-    expected_cnl: str | None = None
+    expected_cnl: list[str] | None = None
     model_output: PromptResult | None = None

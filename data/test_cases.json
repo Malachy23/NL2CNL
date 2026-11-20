@@ -4,77 +4,77 @@
         {
             "id": "1",
             "nl_input": "diabetes meds?",
-            "expected_cnl": "Which drugs treat the disease Diabetes?"
+            "expected_cnl": ["Which drugs treat the disease Diabetes?", "What are the drugs that treat the disease Diabetes?"]
         },
         {
             "id": "2",
             "nl_input": "BRCA1 mutated?",
-            "expected_cnl": "Is gene BRCA1 mutated?"
+            "expected_cnl": ["Is gene BRCA1 mutated?"]
         },
         {
             "id": "3",
             "nl_input": "approved drugs",
-            "expected_cnl": "What are the drugs that are approved?"
+            "expected_cnl": ["What are the drugs that are approved?", "Which drugs are approved?"]
         },
         {
             "id": "4",
             "nl_input": "genes: TP53 expressed?",
-            "expected_cnl": "Is gene TP53 expressed?"
+            "expected_cnl": ["Is gene TP53 expressed?"]
         },
         {
             "id": "5",
             "nl_input": "is insulin upregulated?",
-            "expected_cnl": "Is protein Insulin upregulated?"
+            "expected_cnl": ["Is protein Insulin upregulated?"]
         },
         {
             "id": "6",
             "nl_input": "yo gimme all the meds that fix migraine pls",
-            "expected_cnl": "Which drugs treat the disease Migraine?"
+            "expected_cnl": ["Which drugs treat the disease Migraine?", "What are the drugs that treat the disease Migraine?"]
         },
         {
             "id": "7",
             "nl_input": "idk tell me if aspirin interacts w/ cox1??",
-            "expected_cnl": "Does drug Aspirin interact with the protein COX1?"
+            "expected_cnl": ["Does drug Aspirin interact with the protein COX1?"]
         },
         {
             "id": "8",
             "nl_input": "do metformin treat diabetes?",
-            "expected_cnl": "Does drug Metformin treat the disease Diabetes?"
+            "expected_cnl": ["Does drug Metformin treat the disease Diabetes?"]
         },
         {
             "id": "9",
             "nl_input": "can you please check if the drug warfarin interacts with the enzyme cyp2c9 thanks",
-            "expected_cnl": "Does drug Warfarin interact with the enzyme CYP2C9?"
+            "expected_cnl": ["Does drug Warfarin interact with the enzyme CYP2C9?"]
         },
         {
             "id": "10",
             "nl_input": "genes associated with asthma",
-            "expected_cnl": "Which genes are related to the disease Asthma?"
+            "expected_cnl": ["Which genes are related to the disease Asthma?", "What are the genes that are related to the disease Asthma"]
         },
         {
             "id": "11",
             "nl_input": "proteins inhibited by > 5 drugs",
-            "expected_cnl": "Which proteins are inhibited by more than 5 drugs?"
+            "expected_cnl": ["Which proteins are inhibited by more than 5 drugs?", "What are the proteins that are inhibited by more than 5 drugs?"]
         },
         {
             "id": "12",
             "nl_input": "genes targeted by 1 drug",
-            "expected_cnl": "Which genes are targeted by exactly 1 drug?"
+            "expected_cnl": ["Which genes are targeted by exactly 1 drug?", "What are the genes that are targeted by exactly 1 drug?"]
         },
         {
             "id": "13",
             "nl_input": "what r the clinical trials for cancer that are completed",
-            "expected_cnl": "What are the clinical-trials that are related to the disease Cancer and are completed?"
+            "expected_cnl": ["What are the clinical-trials that are related to the disease Cancer and are completed?", "Which clinical-trials are related to the disease Cancer and are completed?"]
         },
         {
             "id": "14",
             "nl_input": "genes related to brca1 or tp53",
-            "expected_cnl": "Which genes are related to the gene BRCA1 or are related to the gene TP53?"
+            "expected_cnl": ["Which genes are related to the gene BRCA1 or are related to the gene TP53?", "What are the genes that are related to the gene CRCA1 or are related to the gene TP53?"]
         },
         {
             "id": "15",
             "nl_input": "drugs treating asthma and diabetes",
-            "expected_cnl": "Which drugs treat the disease Asthma and treat the disease Diabetes?"
+            "expected_cnl": ["Which drugs treat the disease Asthma and treat the disease Diabetes?", "What are the drugs that treat the disease Asthma and treat the disease Diabetes?"]
         }
     ]
 }

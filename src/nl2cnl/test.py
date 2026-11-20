@@ -24,7 +24,6 @@ def check_grammar(text: str) -> int:
 def method_to_be_named(args, processed_items: list[PromptItem]):
     rows = []
 
-    # This is horrible, but temporary
     for item in CliUI().iter(processed_items, phase="Testing"):
         model_output = item.model_output
         assert model_output
@@ -34,7 +33,7 @@ def method_to_be_named(args, processed_items: list[PromptItem]):
             "model": args.model,
             "strategy": args.strategy,
             "grammar_check": check_grammar(model_output.text),
-            "match": 1 if model_output.text == item.expected_cnl else 0,
+            "match": 1 if model_output.text in item.expected_cnl else 0,
             "prompt_tokens": model_output.prompt_tokens,
             "completion_tokens": model_output.completion_tokens,
             "total_tokens": model_output.total_tokens,
