@@ -2,7 +2,10 @@ from abc import ABC, abstractmethod
 from json import load
 from pathlib import Path
 
-from nl2cnl.templates import RAW_SYSTEM_PROMPT
+from numpy import argsort
+from sentence_transformers import SentenceTransformer
+
+from nl2cnl.templates import RAW_SYSTEM_PROMPT, EXAMPLE_RETRIEVAL_SYSTEM_PROMPT
 
 
 # I don't yet know how this will look in the future
@@ -62,15 +65,47 @@ class RawStrategy(SystemPromptStrategy):
 
 class ExampleRetrievalStrategy(SystemPromptStrategy):
     def __init__(self):
+        super().__init__()
         self.specification = ""
 
+        self.embedding_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+
+
     def setup(self, grammar_path: Path, examples_path: Path | None) -> None:
-            with open(grammar_path, "r") as file:
-                self.specification = file.read()
+        self.specification = grammar_path.read_text()
+
+        if examples_path is None:
+            return
+        
+        self._load_examples(examples_path)
+
+        # Create embeddings for examples
+        self.examples_embedding = self.embedding_model.encode(
+            [example["nl_input"] for example in self.examples],
+            convert_to_numpy=True,
+            normalize_embeddings=True,
+            show_progress_bar=False
+        )
 
     
+    # TODO: Maybe it's better to 
     def get_system_prompt(self, user_prompt: str) -> str:
-        return ""
+        user_prompt_embedding = self.embedding_model.encode(user_prompt, normalize_embeddings=True)
+        
+        scores = self.examples_embedding @ user_prompt_embedding
+        
+        top_k = 5 #int( len(self.examples) / 3 ) # Takes a third of the example dataset size as K
+        # TODO: Check if this is appropriate
+        
+        best_idx = argsort(scores)[::-1][:top_k]
+
+        chosen_examples = [self.examples[idx] for idx in best_idx]
+
+
+        return EXAMPLE_RETRIEVAL_SYSTEM_PROMPT.format(
+            specification=self.specification,
+            examples=self._format_examples(chosen_examples)
+        )
 
 class SubgrammarRetrievalStrategy(SystemPromptStrategy):
     pass
