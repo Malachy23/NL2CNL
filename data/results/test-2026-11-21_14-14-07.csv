@@ -1,0 +1,16 @@
+id,model,strategy,syntax_valid,match,prompt_tokens,completion_tokens,total_tokens,latency_ms,cost_usd
+1,ollama_chat/qwen3.5:4b,raw,0,0,1394,7,1401,7092.8540819986665,0.0
+2,ollama_chat/qwen3.5:4b,raw,0,0,1395,9,1404,511.09041400195565,0.0
+3,ollama_chat/qwen3.5:4b,raw,0,0,1392,9,1401,482.56936199686606,0.0
+4,ollama_chat/qwen3.5:4b,raw,0,0,1397,16,1413,641.7851529986365,0.0
+5,ollama_chat/qwen3.5:4b,raw,0,0,1395,6,1401,432.701685000211,0.0
+6,ollama_chat/qwen3.5:4b,raw,0,0,1400,12,1412,562.4674320024496,0.0
+7,ollama_chat/qwen3.5:4b,raw,0,0,1404,6,1410,461.9924449980317,0.0
+8,ollama_chat/qwen3.5:4b,raw,0,0,1397,10,1407,481.93816499770037,0.0
+9,ollama_chat/qwen3.5:4b,raw,0,0,1410,18,1428,769.7577699982503,0.0
+10,ollama_chat/qwen3.5:4b,raw,0,0,1394,14,1408,547.5861109989637,0.0
+11,ollama_chat/qwen3.5:4b,raw,1,1,1399,12,1411,539.8831169986806,0.0
+12,ollama_chat/qwen3.5:4b,raw,0,0,1396,17,1413,594.1249050010811,0.0
+13,ollama_chat/qwen3.5:4b,raw,0,0,1400,14,1414,555.5300460000581,0.0
+14,ollama_chat/qwen3.5:4b,raw,0,0,1400,25,1425,711.628347999067,0.0
+15,ollama_chat/qwen3.5:4b,raw,0,0,1396,18,1414,635.094344997924,0.0

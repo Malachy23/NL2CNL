@@ -2,10 +2,10 @@ from dotenv import load_dotenv
 
 from nl2cnl.arg.arg_checker import build_config
 from nl2cnl.arg.arg_parser import parse_args
-from nl2cnl.benchmark import start_benchmark
-from nl2cnl.input_formatter import format_input
-from nl2cnl.prompt.prompt_model import prompt_model
-from nl2cnl.prompt.sys_prompt.sys_prompt_strategy import get_strategy
+from nl2cnl.pipeline.benchmark import start_benchmark
+from nl2cnl.pipeline.input_formatter import format_input
+from nl2cnl.pipeline.prompt_model import prompt_model
+from nl2cnl.pipeline.system_prompt import get_strategy
 from nl2cnl.ui import CliUI
 
 

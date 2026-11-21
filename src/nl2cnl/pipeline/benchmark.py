@@ -4,7 +4,7 @@ from datetime import datetime
 
 from lark import Lark, LarkError, UnexpectedInput
 
-from nl2cnl.prompt.prompt_item import PromptItem
+from nl2cnl.pipeline.prompt_model import PromptItem
 from nl2cnl.ui import CliUI
 
 columns = ["id", "model", "strategy", "syntax_valid", "match", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]

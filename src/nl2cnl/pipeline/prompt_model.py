@@ -51,6 +51,14 @@ class PromptResult:
     error: str | None = None
 
 
+@dataclass
+class PromptItem:
+    id: str
+    nl_input: str
+    expected_cnl: list[str] | None = None
+    model_output: PromptResult | None = None
+
+
 def prompt_model(
     model: str,
     messages: list[dict],
