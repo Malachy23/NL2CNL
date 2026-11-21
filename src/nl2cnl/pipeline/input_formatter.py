@@ -17,6 +17,7 @@ def format_input(config : AppConfig) -> list[PromptItem]:
                 if line.strip():
                     items.append(PromptItem(id=f"in_{idx}", nl_input=line.strip()))
 
+    # TODO: Maybe move file opening logic somewhere else. 
     elif config.benchmark is not None:
         with open(config.benchmark, "r", encoding="utf-8") as f:
             data = load(f)

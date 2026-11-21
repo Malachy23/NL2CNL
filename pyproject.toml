@@ -11,8 +11,10 @@ dependencies = [
     "argparse>=1.4.0",
     "lark>=1.3.1",
     "litellm>=1.109.1",
+    "numpy>=2.5.5",
     "python-dotenv>=1.2.4",
     "rich>=15.0.0",
+    "sentence-transformers>=6.3.0",
 ]
 
 [project.scripts]

@@ -17,4 +17,4 @@ results/*
 
 # Various
 grammar.lark
-example.yaml
+data/results/*

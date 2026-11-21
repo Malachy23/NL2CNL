@@ -27,8 +27,10 @@ def main():
 
     # --- PROMPTING
     for item in CliUI().iter(items, phase="Prompting"):
+        system_prompt = prompt_strategy.get_system_prompt(item.nl_input)
+
         messages = [
-            {"role": "system", "content": prompt_strategy.get_system_prompt(item.nl_input)},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": item.nl_input},
         ]
         item.model_output = prompt_model(config.model, messages)

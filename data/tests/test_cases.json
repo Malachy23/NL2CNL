@@ -49,7 +49,7 @@
         {
             "id": "10",
             "nl_input": "genes associated with asthma",
-            "expected_cnl": ["Which genes are related to the disease Asthma?", "What are the genes that are related to the disease Asthma"]
+            "expected_cnl": ["Which genes are related to the disease Asthma?", "What are the genes that are related to the disease Asthma?"]
         },
         {
             "id": "11",

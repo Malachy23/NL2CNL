@@ -1,0 +1,45 @@
+{
+    "grammar" : "BioQueryCNL",
+    "examples": [
+        {
+            "nl_input": "Symptoms alleviated by Epinephrine",
+            "cnl_output": "Which symptoms are alleviated by the drug Epinephrine?"
+        },
+        {
+            "nl_input": "Side effects of drugs treating asthma",
+            "cnl_output": "What are the side-effects of the drugs that treat the disease Asthma?"
+        },
+        {
+            "nl_input": "genes related to asthma and targeted by epinephrine",
+            "cnl_output": "What are the genes that are related to the disease Asthma and are targeted by the drug Epinephrine?"
+        },
+        {
+            "nl_input": "Symptoms of diseases related to ADRB1 or treated by epinephrine",
+            "cnl_output": "What are the symptoms of the diseases that are related to the gene ADRB1 or that are treated by the drug Epinephrine?"
+        },
+        {
+            "nl_input": "I want to know genes targeted by at least two drugs and related to max three diseases",
+            "cnl_output": "Which genes are targeted by at least 2 drugs and are related to at most 3 diseases?"
+        },
+        {
+            "nl_input": "is insulin potent?",
+            "cnl_output": "Is protein Insulin potent?"
+        },
+        {
+            "nl_input": "paracetamol approved?",
+            "cnl_output": "Is drug Paracetamol approved?"
+        },
+        {
+            "nl_input": "aspirin interacts with ADRB1?",
+            "cnl_output": "Does drug Aspirin interacts with gene ADRB1?"
+        },
+        {
+            "nl_input": "Tell me whether paracetamel has any side effects",
+            "cnl_output": "Does drug Paracetamol have at least 1 side-effect?"
+        },
+        {
+            "nl_input": "drugs with side effects in the number between 1 and 3",
+            "cnl_output": "Which drugs have at least 1 side-effect and have at most 3 side-effects?"
+        }
+    ]
+}
