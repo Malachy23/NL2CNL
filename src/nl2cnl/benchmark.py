@@ -23,7 +23,7 @@ def is_syntax_valid(text: str) -> int:
 def evaluate_items(args, processed_items: list[PromptItem]):
     rows = []
 
-    for item in CliUI().iter(processed_items, phase="Testing"):
+    for item in CliUI().iter(processed_items, phase="Benchmarking"):
         model_output = item.model_output
         assert model_output
 
@@ -47,7 +47,7 @@ def evaluate_items(args, processed_items: list[PromptItem]):
 def start_benchmark(args, processed_items: list[PromptItem]) -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    with open(f"./results/test-{timestamp}.csv", mode="w", newline="", encoding="utf-8") as file:
+    with open(f"./data/results/test-{timestamp}.csv", mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=columns)
 
         writer.writeheader()

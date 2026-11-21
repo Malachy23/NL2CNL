@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
+from pathlib import Path
 
 
 # I don't yet know how this will look in the future
 # It is likely going to change
 class SystemPromptStrategy(ABC):
     @abstractmethod
-    def setup(self, grammar_path: str, example_path: str | None) -> None:
+    def setup(self, grammar_path: Path, examples_path: Path | None) -> None:
         pass
 
     @abstractmethod
@@ -17,13 +18,13 @@ class RawStrategy(SystemPromptStrategy):
     def __init__(self):
         self.specification = ""
 
-    def setup(self, grammar_path: str, example_path: str | None) -> None:
+    def setup(self, grammar_path: Path, examples_path: Path | None) -> None:
         with open(grammar_path, "r") as file:
             self.specification = file.read()
             
         self.examples = ""
-        if example_path is not None:
-            with open(example_path, "r") as file:
+        if examples_path is not None:
+            with open(examples_path, "r") as file:
                 self.examples = file.read()
 
 

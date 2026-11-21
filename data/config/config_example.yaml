@@ -1,0 +1,4 @@
+model: "ollama_chat/qwen3.5:4b"
+specification: "data/specifications/bioquery.yaml"
+
+benchmark: "data/tests/test_cases.json"
