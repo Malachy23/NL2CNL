@@ -9,7 +9,7 @@ from nl2cnl.ui import CliUI
 
 columns = ["id", "model", "strategy", "syntax_valid", "match", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]
 
-p = Lark.open("grammar.lark", parser="lalr")
+p = Lark.open("grammar.lark", parser="earley")
 
 def is_syntax_valid(text: str) -> int:
     try:

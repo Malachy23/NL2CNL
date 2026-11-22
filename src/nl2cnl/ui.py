@@ -3,6 +3,7 @@ from contextlib import contextmanager
 from typing import TypeVar
 
 from rich.console import Console
+from rich.markup import escape
 from rich.progress import (
     BarColumn,
     MofNCompleteColumn,
@@ -17,7 +18,7 @@ T = TypeVar("T")
 
 
 class CliUI:
-    _instance: "CliUI | None" = None
+    _instance: CliUI | None = None
     console: Console
 
     def __new__(cls) -> "CliUI":
@@ -30,7 +31,7 @@ class CliUI:
         self.console.print(f"[bold cyan]NL2CNL[/] - [dim]model: {model}, strategy: {strategy}[/]\n")
 
     def error(self, message: str) -> None:
-        self.console.print(f"[bold red]✗[/] [red]{message}[/]")
+        self.console.print(f"[bold red]✗[/] [red]{escape(message)}[/]")
 
     @contextmanager
     def step(self, label: str) -> Iterator[None]:
@@ -57,4 +58,4 @@ class CliUI:
     def print_results(self, items: Sequence) -> None:
         self.console.print()
         for item in items:
-            self.console.print(f"[bold]{item.id}:[/] {item.model_output.text}")
+            self.console.print(f"[bold]{item.id}:[/] {escape(item.model_output.text)}")

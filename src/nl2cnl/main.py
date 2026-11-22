@@ -12,6 +12,7 @@ def main():
     load_dotenv()
     args = parse_args()
 
+    # To deactivate if wanting to use updated (online) costs
     environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
     register(freeze)
 

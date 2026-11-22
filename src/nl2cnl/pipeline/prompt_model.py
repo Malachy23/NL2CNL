@@ -84,7 +84,7 @@ def prompt_model(
     except FATAL_ERRORS as e:
         CliUI().error(f"Fatal model/API error ({getattr(e, 'status_code', 'N/A')}): {e.message}")
         sys.exit(2)
-    except (RETRYABLE_ERRORS, APIError) as e:
+    except (*RETRYABLE_ERRORS, APIError) as e:
         latency_ms = (perf_counter() - start) * 1000
         err_msg = f"Temporary API error ({getattr(e, 'status_code', 'N/A')}): {e.message}"
         CliUI().error(err_msg)

@@ -173,6 +173,9 @@ def validate_and_build(raw: dict[str, Any]) -> AppConfig:
         examples_path = check_file_existence(raw["examples"])
         check_file_suffix(examples_path, ".json")
 
+    if strategy == "example" and examples_path is None:
+        raise InvalidArgumentError("Strategy 'example' requires examples to be provided (-e, --examples)")
+
     return AppConfig(
         model=raw["model"],
         specification=spec_path,

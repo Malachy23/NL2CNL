@@ -31,7 +31,7 @@
         },
         {
             "nl_input": "aspirin interacts with ADRB1?",
-            "cnl_output": "Does drug Aspirin interacts with gene ADRB1?"
+            "cnl_output": "Does drug Aspirin interacts with the gene ADRB1?"
         },
         {
             "nl_input": "Tell me whether paracetamel has any side effects",
@@ -55,19 +55,11 @@
         },
         {
             "nl_input": "diseases associated with at most four genes",
-            "cnl_output": "Which diseases are associated with at most 4 genes?"
+            "cnl_output": "Which diseases are associated to at most 4 genes?"
         },
         {
             "nl_input": "diseases causing at least two symptoms of protein Insulin",
             "cnl_output": "Which diseases cause at least 2 symptoms of the protein Insulin?"
-        },
-        {
-            "nl_input": "genes targeted by more than one type of drug",
-            "cnl_output": "Which genes are targeted by more than 1 type of drug?"
-        },
-        {
-            "nl_input": "what are the side effects of drugs treating asthma",
-            "cnl_output": "What are the side-effects of the drugs that treat the disease Asthma?"
         },
         {
             "nl_input": "what are the symptoms of asthma alleviated by epinephrine",
