@@ -15,6 +15,7 @@ dependencies = [
     "python-dotenv>=1.2.4",
     "rich>=15.0.0",
     "sentence-transformers>=6.3.0",
+    "torch"
 ]
 
 [project.scripts]
@@ -23,3 +24,11 @@ nl2cnl = "nl2cnl.main:main"
 [build-system]
 requires = ["uv_build>=0.13.8,<0.14.0"]
 build-backend = "uv_build"
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

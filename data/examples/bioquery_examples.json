@@ -40,6 +40,66 @@
         {
             "nl_input": "drugs with side effects in the number between 1 and 3",
             "cnl_output": "Which drugs have at least 1 side-effect and have at most 3 side-effects?"
+        },
+        {
+            "nl_input": "genes targeted by at least two drugs",
+            "cnl_output": "Which genes are targeted by at least 2 drugs?"
+        },
+        {
+            "nl_input": "proteins regulated by more than three genes",
+            "cnl_output": "Which proteins are regulated by more than 3 genes?"
+        },
+        {
+            "nl_input": "drugs causing exactly two side effects",
+            "cnl_output": "Which drugs cause exactly 2 side-effects?"
+        },
+        {
+            "nl_input": "diseases associated with at most four genes",
+            "cnl_output": "Which diseases are associated with at most 4 genes?"
+        },
+        {
+            "nl_input": "diseases causing at least two symptoms of protein Insulin",
+            "cnl_output": "Which diseases cause at least 2 symptoms of the protein Insulin?"
+        },
+        {
+            "nl_input": "genes targeted by more than one type of drug",
+            "cnl_output": "Which genes are targeted by more than 1 type of drug?"
+        },
+        {
+            "nl_input": "what are the side effects of drugs treating asthma",
+            "cnl_output": "What are the side-effects of the drugs that treat the disease Asthma?"
+        },
+        {
+            "nl_input": "what are the symptoms of asthma alleviated by epinephrine",
+            "cnl_output": "What are the symptoms of the disease Asthma that are alleviated by the drug Epinephrine?"
+        },
+        {
+            "nl_input": "what are the genes targeted by at least two drugs",
+            "cnl_output": "What are the genes that are targeted by at least 2 drugs?"
+        },
+        {
+            "nl_input": "what are the drugs that interact with protein Insulin",
+            "cnl_output": "What are the drugs that interact with the protein Insulin?"
+        },
+        {
+            "nl_input": "genes interacting with protein Insulin",
+            "cnl_output": "Which genes interact with the protein Insulin?"
+        },
+        {
+            "nl_input": "symptoms related to asthma and alleviated by epinephrine",
+            "cnl_output": "Which symptoms are related to the disease Asthma and are alleviated by the drug Epinephrine?"
+        },
+        {
+            "nl_input": "genes targeted by epinephrine or related to asthma",
+            "cnl_output": "Which genes are targeted by the drug Epinephrine or are related to the disease Asthma?"
+        },
+        {
+            "nl_input": "does aspirin interact with protein Insulin",
+            "cnl_output": "Does drug Aspirin interact with the protein Insulin?"
+        },
+        {
+            "nl_input": "does epinephrine alleviate at least two symptoms",
+            "cnl_output": "Does drug Epinephrine alleviate at least 2 symptoms?"
         }
     ]
 }
