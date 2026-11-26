@@ -1,6 +1,5 @@
 import re
 import sys
-from dataclasses import dataclass
 from time import perf_counter
 
 import litellm
@@ -18,6 +17,7 @@ from litellm.exceptions import (
     Timeout,
 )
 
+from nl2cnl.model import PromptResult
 from nl2cnl.ui import CliUI
 
 litellm.suppress_debug_info = True
@@ -38,25 +38,6 @@ RETRYABLE_ERRORS = (
     InternalServerError,
     APIConnectionError,
 )
-
-
-@dataclass(frozen=True, slots=True)
-class PromptResult:
-    text: str
-    prompt_tokens: int
-    completion_tokens: int
-    total_tokens: int
-    latency_ms: float
-    cost_usd: float
-    error: str | None = None
-
-
-@dataclass
-class PromptItem:
-    id: str
-    nl_input: str
-    expected_cnl: list[str] | None = None
-    model_output: PromptResult | None = None
 
 
 def prompt_model(
