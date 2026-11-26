@@ -13,11 +13,10 @@ class InContextStrategy(SystemPromptStrategy):
         self.specification = ""
         super().__init__()
 
-    def setup(self, grammar_path: Path, examples_path: Path | None) -> None:
-        self.specification = grammar_path.read_text() # TODO: Move file open logic somewhere else
-
-        if examples_path is not None:
-            self._load_examples(examples_path)
+    def setup(self, specification: str, examples: list[dict[str, str]] | None) -> None:
+        self.specification = specification # TODO: Move file open logic somewhere else
+        if examples is not None:
+            self.examples = examples
 
 
     def get_system_prompt(self, user_prompt: str) -> str:

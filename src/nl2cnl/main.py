@@ -18,6 +18,7 @@ def main():
 
     from nl2cnl.config import build_config
     from nl2cnl.llm import prompt_model
+    from nl2cnl.loaders import load_examples, load_text
     from nl2cnl.pipeline.input_formatter import format_input
     from nl2cnl.strategies import get_strategy
 
@@ -32,7 +33,12 @@ def main():
     # --- STRATEGY SETUP
     with CliUI().step(f"Setting up strategy ({config.specification.name})"):
         prompt_strategy = get_strategy(config.strategy)
-        prompt_strategy.setup(config.specification, config.examples)
+
+        # Loading contents of files in specific formats
+        prompt_strategy.setup(
+            load_text(config.specification), 
+            load_examples(config.examples)
+        )
 
     # --- PROMPTING
     for item in CliUI().iter(items, phase="Prompting"):

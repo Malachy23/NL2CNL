@@ -25,13 +25,13 @@ class ExampleRAGStrategy(SystemPromptStrategy):
         except OSError:  # Downloads it if not previously installed
             self.embedding_model = SentenceTransformer(name, device="cpu")
 
-    def setup(self, grammar_path: Path, examples_path: Path | None) -> None:
-        self.specification = grammar_path.read_text()
+    def setup(self, specification: str, examples: list[dict[str, str]] | None) -> None:
+        self.specification = specification
 
-        if examples_path is None:
+        if examples is None:
             return
-        
-        self._load_examples(examples_path)
+
+        self.examples = examples
 
         # Create embeddings for examples
         self.examples_embedding = self.embedding_model.encode(

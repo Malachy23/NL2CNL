@@ -26,6 +26,7 @@ def evaluate_items(args, processed_items: list[PromptItem]):
     for item in CliUI().iter(processed_items, phase="Benchmarking"):
         model_output = item.model_output
         assert model_output
+        assert item.expected_cnl
 
         row = {
             "id": item.id,
@@ -47,6 +48,7 @@ def evaluate_items(args, processed_items: list[PromptItem]):
 def start_benchmark(args, processed_items: list[PromptItem]) -> None:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
+    # TODO: Move this logic to loader.py
     with open(f"./data/results/test-{timestamp}.csv", mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=columns)
 

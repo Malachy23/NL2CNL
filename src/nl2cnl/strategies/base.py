@@ -10,7 +10,7 @@ class SystemPromptStrategy(ABC):
         self.examples: list[dict[str, str]] = [] # Format [{"nl_input": "...", "cnl_output": "..."}, ...]
 
     @abstractmethod
-    def setup(self, grammar_path: Path, examples_path: Path | None) -> None:
+    def setup(self, specification: str, examples: list[dict[str, str]] | None) -> None:
         """Used to give the strategy the grammar specification and examples path.
         This should be run before self.get_system_prompt()
         """
@@ -18,12 +18,6 @@ class SystemPromptStrategy(ABC):
     @abstractmethod
     def get_system_prompt(self, user_prompt: str) -> str:
         """Used to get the system prompt. The user_prompt is required in most strategies"""
-
-    # TODO: This should be somewhere else
-    def _load_examples(self, examples_path: Path):
-        with open(examples_path, "r", encoding="utf-8") as f:
-            data = load(f)
-            self.examples = data["examples"] if isinstance(data, dict) else data
 
     def _format_examples(self, examples: list[dict[str, str]]) -> str:
         """Converts examples' dict format into printable string of the type
