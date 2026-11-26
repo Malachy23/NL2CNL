@@ -1,4 +1,4 @@
-RAW_SYSTEM_PROMPT="""
+IN_CONTEXT_SYSTEM_PROMPT="""
 You are an expert NL2CNL translator.
 Your task is to translate natural language input into a Controlled Natural Language (CNL) that strictly conforms to the provided YAML grammar specification.
 
@@ -26,7 +26,7 @@ YAML GRAMMAR SPECIFICATION:
 {specification}
 """
 
-EXAMPLE_RETRIEVAL_SYSTEM_PROMPT="""
+EXAMPLE_RAG_SYSTEM_PROMPT="""
 You are an expert NL2CNL translator.
 Your task is to translate natural language input into a Controlled Natural Language (CNL) that strictly conforms to the provided YAML grammar specification.
 

@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter
 
-AVAILABLE_STRATEGIES = ["raw", "example", "subgrammar"]
+AVAILABLE_STRATEGIES = ["inctx", "example", "subgrammar"]
 
 
 def parse_args() -> Namespace:
@@ -81,7 +81,7 @@ def parse_args() -> Namespace:
         type=str,
         choices=AVAILABLE_STRATEGIES,
         default=None,
-        help=f"Grammar injection strategy: {', '.join(AVAILABLE_STRATEGIES)}. (default: raw)",
+        help=f"Grammar injection strategy: {', '.join(AVAILABLE_STRATEGIES)}. (default: inctx)",
     )
     options_group.add_argument(
         "--no-output",

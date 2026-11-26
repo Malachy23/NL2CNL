@@ -1,7 +1,7 @@
 from json import load
 
-from nl2cnl.arg.arg_checker import AppConfig
-from nl2cnl.model import PromptItem, PromptResult
+from nl2cnl.config import AppConfig
+from nl2cnl.model import PromptItem
 
 
 # Processes CLI argument in PromptItem format

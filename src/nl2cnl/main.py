@@ -4,7 +4,7 @@ from os import environ
 
 from dotenv import load_dotenv
 
-from nl2cnl.arg.arg_parser import parse_args
+from nl2cnl.cli import parse_args
 from nl2cnl.ui import CliUI
 
 
@@ -16,11 +16,10 @@ def main():
     environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
     register(freeze)
 
-    from nl2cnl.arg.arg_checker import build_config
+    from nl2cnl.config import build_config
+    from nl2cnl.llm import prompt_model
     from nl2cnl.pipeline.input_formatter import format_input
-    from nl2cnl.pipeline.prompt_model import prompt_model
-    from nl2cnl.pipeline.system_prompt import get_strategy
-
+    from nl2cnl.strategies import get_strategy
 
     config = build_config(args)
 
