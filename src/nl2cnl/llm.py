@@ -1,5 +1,4 @@
 import re
-import sys
 from time import perf_counter
 
 import litellm
@@ -18,7 +17,6 @@ from litellm.exceptions import (
 )
 
 from nl2cnl.model import PromptResult
-from nl2cnl.ui import CliUI
 
 litellm.suppress_debug_info = True
 litellm.set_verbose = False
@@ -39,6 +37,8 @@ RETRYABLE_ERRORS = (
     APIConnectionError,
 )
 
+class FatalLLMError(Exception):
+    pass
 
 def prompt_model(
     model: str,
@@ -63,12 +63,10 @@ def prompt_model(
             num_retries=3,  # Retries automatically on error 429, 500, 503 and Timeout
         )
     except FATAL_ERRORS as e:
-        CliUI().error(f"Fatal model/API error ({getattr(e, 'status_code', 'N/A')}): {e.message}")
-        sys.exit(2)
+        raise FatalLLMError(f"Fatal model/API error ({getattr(e, 'status_code', 'N/A')}): {e.message}") from e
     except (*RETRYABLE_ERRORS, APIError) as e:
         latency_ms = (perf_counter() - start) * 1000
         err_msg = f"Temporary API error ({getattr(e, 'status_code', 'N/A')}): {e.message}"
-        CliUI().error(err_msg)
         return PromptResult(
             text="",
             prompt_tokens=0,

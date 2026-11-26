@@ -1,10 +1,12 @@
 from atexit import register
 from gc import freeze
 from os import environ
+from sys import exit
 
 from dotenv import load_dotenv
 
 from nl2cnl.cli import parse_args
+from nl2cnl.llm import FatalLLMError
 from nl2cnl.ui import CliUI
 
 
@@ -41,14 +43,23 @@ def main():
         )
 
     # --- PROMPTING
-    for item in CliUI().iter(items, phase="Prompting"):
-        system_prompt = prompt_strategy.get_system_prompt(item.nl_input)
+    try:
+        for item in CliUI().iter(items, phase="Prompting"):
+            system_prompt = prompt_strategy.get_system_prompt(item.nl_input)
 
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": item.nl_input},
-        ]
-        item.model_output = prompt_model(config.model, messages)
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": item.nl_input},
+            ]
+            item.model_output = prompt_model(config.model, messages)
+
+            # Prints RETRIABLE_ERRORS
+            error = item.model_output.error
+            if error is not None:
+                CliUI().error(error)
+    except FatalLLMError as e:
+        CliUI().error(str(e))
+        exit(2)
 
     # --- BENCHMARK
     if config.benchmark is not None:
