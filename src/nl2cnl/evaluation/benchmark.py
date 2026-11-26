@@ -2,25 +2,13 @@
 import csv
 from datetime import datetime
 
-from lark import Lark, LarkError, UnexpectedInput
-
+from nl2cnl.evaluation.validator import is_syntax_valid
 from nl2cnl.model import PromptItem
 from nl2cnl.ui import CliUI
 
 columns = ["id", "model", "strategy", "syntax_valid", "match", "prompt_tokens", "completion_tokens", "total_tokens", "latency_ms", "cost_usd"]
 
-p = Lark.open("grammar.lark", parser="earley")
-
-def is_syntax_valid(text: str) -> int:
-    try:
-        p.parse(text)
-        return 1
-    except UnexpectedInput:
-        return 0
-    except LarkError:
-        return 0
-
-def evaluate_items(args, processed_items: list[PromptItem]):
+def _evaluate_items(args, processed_items: list[PromptItem]):
     rows = []
 
     for item in CliUI().iter(processed_items, phase="Benchmarking"):
@@ -46,6 +34,12 @@ def evaluate_items(args, processed_items: list[PromptItem]):
 
 # Takes from granted that PromptItems have already been processed by LLM
 def start_benchmark(args, processed_items: list[PromptItem]) -> None:
+    """Takes a list[PromptItem] processed by an LLM (with PromptItem.PromptResult not None)
+    and performes a benchmark on its results, saving it into a <timestamp>.csv file.
+
+    For each <processed_item>, the model_output is parsed by Lark to check whether it respects the grammar,
+    and whether it is equal to the <processed_item>.expected_cnl, taken from the benchmark (-b) file provided .
+    """
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     # TODO: Move this logic to loader.py
@@ -54,5 +48,5 @@ def start_benchmark(args, processed_items: list[PromptItem]) -> None:
 
         writer.writeheader()
 
-        rows = evaluate_items(args, processed_items)
+        rows = _evaluate_items(args, processed_items)
         writer.writerows(rows)
