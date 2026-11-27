@@ -24,7 +24,6 @@ def main():
     from nl2cnl.config import build_config
     from nl2cnl.formatter import format_input
     from nl2cnl.llm import prompt_model
-    from nl2cnl.loaders import load_examples, load_text
     from nl2cnl.strategies import StrategyOptions, get_strategy
 
     config = build_config(args)
@@ -39,8 +38,8 @@ def main():
     with CliUI().step(f"Setting up strategy ({config.specification.name})"):
         prompt_strategy = get_strategy(config.strategy, StrategyOptions(top_k=config.top_k))
         prompt_strategy.setup(
-            load_text(config.specification),
-            load_examples(config.examples),
+            config.specification,
+            config.examples,
         )
 
     # --- PROMPTING

@@ -1,5 +1,7 @@
+from pathlib import Path
+
 from nl2cnl.prompts import IN_CONTEXT_SYSTEM_PROMPT
-from nl2cnl.strategies.base import Example, SystemPromptStrategy
+from nl2cnl.strategies.base import SystemPromptStrategy
 
 
 class InContextStrategy(SystemPromptStrategy):
@@ -8,9 +10,9 @@ class InContextStrategy(SystemPromptStrategy):
     As such, once both are provided the system prompt remains the same no matter what the user prompt is.
     """
 
-    def setup(self, specification: str, examples: list[Example]) -> None:
-        self.specification = specification
-        self.examples = examples
+
+    def setup(self, specification_path: Path, examples_path: Path | None) -> None:
+        super().setup(specification_path, examples_path)
 
     def get_system_prompt(self, user_prompt: str) -> str:
         # user_prompt is unused

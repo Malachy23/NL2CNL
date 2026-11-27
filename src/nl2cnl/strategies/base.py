@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from pathlib import Path
+
+from nl2cnl.loaders import load_examples, load_text
 
 type Example = dict[str, str]  # {"nl_input": "...", "cnl_output": "..."}
 
@@ -17,10 +20,21 @@ class SystemPromptStrategy(ABC):
         self.examples: list[Example] = []
 
     @abstractmethod
-    def setup(self, specification: str, examples: list[Example]) -> None:
+    def _load_specification(self, specification_path: Path) -> None:
+        self.specification = load_text(specification_path)
+
+    @abstractmethod
+    def _load_examples(self, examples_path: Path) -> None:
+        self.examples = load_examples(examples_path)
+
+    @abstractmethod
+    def setup(self, specification_path: Path, examples_path: Path | None) -> None:
         """Gives the strategy the grammar specification and the examples (already loaded).
         Must be called before get_system_prompt().
         """
+        self._load_specification(specification_path)
+        if examples_path is not None:
+            self._load_examples(examples_path)
 
     @abstractmethod
     def get_system_prompt(self, user_prompt: str) -> str:
