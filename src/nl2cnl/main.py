@@ -22,7 +22,7 @@ def main():
     from nl2cnl.formatter import format_input
     from nl2cnl.llm import prompt_model
     from nl2cnl.loaders import load_examples, load_text
-    from nl2cnl.strategies import get_strategy
+    from nl2cnl.strategies import StrategyOptions, get_strategy
 
     config = build_config(args)
 
@@ -34,12 +34,10 @@ def main():
 
     # --- STRATEGY SETUP
     with CliUI().step(f"Setting up strategy ({config.specification.name})"):
-        prompt_strategy = get_strategy(config.strategy)
-
-        # Loading contents of files in specific formats
+        prompt_strategy = get_strategy(config.strategy, StrategyOptions(top_k=config.top_k))
         prompt_strategy.setup(
-            load_text(config.specification), 
-            load_examples(config.examples)
+            load_text(config.specification),
+            load_examples(config.examples),
         )
 
     # --- PROMPTING

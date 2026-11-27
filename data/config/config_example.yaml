@@ -3,3 +3,9 @@ specification: "data/specifications/bioquery.yaml"
 
 benchmark: "data/tests/test_cases.json"
 examples: "data/examples/bioquery_examples.json"
+
+# Optional
+# strategy: "example"        # inctx (default) | example
+# top_k: 10                  # examples retrieved by "example"
+# grammar: "grammar.lark"    # Lark grammar used to check benchmark outputs
+# no_output: false

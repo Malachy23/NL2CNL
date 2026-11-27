@@ -1,4 +1,11 @@
+"""Registry of the available strategies.
+
+Each strategy is referenced by "module:Class" and imported only when chosen, so that
+heavy dependencies (e.g. sentence-transformers for "ExampleRAGStrategy") are loaded only if needed.
+"""
 from importlib import import_module
+
+from nl2cnl.strategies.base import StrategyOptions, SystemPromptStrategy
 
 _REGISTRY = {
     "inctx": "nl2cnl.strategies.in_context:InContextStrategy",
@@ -6,8 +13,9 @@ _REGISTRY = {
 }
 AVAILABLE_STRATEGIES = list(_REGISTRY)
 
-def get_strategy(name: str):
-    module, cls = _REGISTRY[name].split(":")
-    return getattr(import_module(module), cls)()
+__all__ = ["AVAILABLE_STRATEGIES", "StrategyOptions", "SystemPromptStrategy", "get_strategy"]
 
-# structuring the imports this way prevents importing unnecessary packages used only by other strategies, thus improving performance
+
+def get_strategy(name: str, options: StrategyOptions | None = None) -> SystemPromptStrategy:
+    module, cls = _REGISTRY[name].split(":")
+    return getattr(import_module(module), cls)(options or StrategyOptions())

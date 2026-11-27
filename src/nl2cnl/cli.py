@@ -84,6 +84,18 @@ def parse_args() -> Namespace:
         help=f"Grammar injection strategy: {', '.join(AVAILABLE_STRATEGIES)}. (default: inctx)",
     )
     options_group.add_argument(
+        "-k", "--top-k",
+        type=int,
+        default=None,
+        help="Number of examples retrieved by the 'example' strategy. (default: 10)",
+    )
+    options_group.add_argument(
+        "-g", "--grammar",
+        type=str,
+        default=None,
+        help="Path to the .lark grammar used to check benchmark outputs. (default: grammar.lark)",
+    )
+    options_group.add_argument(
         "--no-output",
         action="store_true",
         default=None,

@@ -22,7 +22,12 @@ ALLOWED_CONFIG_KEYS = {
     "examples",
     "strategy",
     "no_output",
+    "grammar",
+    "top_k",
 }
+
+DEFAULT_GRAMMAR = "grammar.lark"
+DEFAULT_TOP_K = 10
 
 
 class InvalidArgumentError(Exception):
@@ -39,6 +44,8 @@ class AppConfig:
     examples: Path | None
     strategy: str
     no_output: bool
+    grammar: Path | None  # Lark grammar used by the benchmark (None when not benchmarking)
+    top_k: int
 
 
 def check_file_existence(path_str: str | Path) -> Path:
@@ -107,6 +114,8 @@ def extract_raw_config(args: Namespace) -> dict[str, Any]:
         "examples": args.examples,
         "strategy": args.strategy,
         "no_output": args.no_output,
+        "grammar": args.grammar,
+        "top_k": args.top_k,
     }
 
     # Overrides input modality if user provided it
@@ -121,6 +130,7 @@ def extract_raw_config(args: Namespace) -> dict[str, Any]:
     # Default values
     raw.setdefault("strategy", "inctx")
     raw.setdefault("no_output", False)
+    raw.setdefault("top_k", DEFAULT_TOP_K)
 
     return raw
 
@@ -176,6 +186,16 @@ def validate_and_build(raw: dict[str, Any]) -> AppConfig:
     if strategy == "example" and examples_path is None:
         raise InvalidArgumentError("Strategy 'example' requires examples to be provided (-e, --examples)")
 
+    top_k = raw["top_k"]
+    if not isinstance(top_k, int) or isinstance(top_k, bool) or top_k < 1:
+        raise InvalidArgumentError(f"'top_k' (-k) must be a positive integer, got '{top_k}'.")
+
+    # The grammar is needed only to check the syntax of benchmark outputs
+    grammar_path: Path | None = None
+    if benchmark_path is not None:
+        grammar_path = check_file_existence(raw.get("grammar") or DEFAULT_GRAMMAR)
+        check_file_suffix(grammar_path, ".lark")
+
     return AppConfig(
         model=raw["model"],
         specification=spec_path,
@@ -185,6 +205,8 @@ def validate_and_build(raw: dict[str, Any]) -> AppConfig:
         examples=examples_path,
         strategy=strategy,
         no_output=raw["no_output"],
+        grammar=grammar_path,
+        top_k=top_k,
     )
 
 
