@@ -6,7 +6,7 @@ from sys import exit
 from dotenv import load_dotenv
 
 from nl2cnl.cli import parse_args
-from nl2cnl.llm import FatalLLMError
+from nl2cnl.model import FatalLLMError
 from nl2cnl.ui import CliUI
 
 
@@ -19,9 +19,9 @@ def main():
     register(freeze)
 
     from nl2cnl.config import build_config
+    from nl2cnl.formatter import format_input
     from nl2cnl.llm import prompt_model
     from nl2cnl.loaders import load_examples, load_text
-    from nl2cnl.pipeline.input_formatter import format_input
     from nl2cnl.strategies import get_strategy
 
     config = build_config(args)
@@ -63,7 +63,7 @@ def main():
 
     # --- BENCHMARK
     if config.benchmark is not None:
-        from nl2cnl.pipeline.benchmark import start_benchmark
+        from nl2cnl.evaluation.benchmark import start_benchmark
 
         start_benchmark(config, items)
 
