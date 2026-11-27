@@ -1,0 +1,55 @@
+start: query
+%import common.WS 
+%import common.CNAME 
+%import common.SIGNED_NUMBER 
+%import common.INT 
+%import common.FLOAT 
+%import common.NUMBER 
+%import common.CPP_COMMENT 
+%import common.LCASE_LETTER 
+%ignore WS 
+%ignore CPP_COMMENT 
+?string: CNAME
+?l_case: LCASE_LETTER
+?number: NUMBER
+
+//  ----- Defined grammar below
+one_word_type: string
+two_words_type: string "-" string
+type: one_word_type | two_words_type
+instance: string
+entity: type instance
+verb: string
+positive_number: number
+no_instance: type "of the" type
+with_instance: type "of the" entity
+of_relation: no_instance | with_instance
+query: yes_no "?" | wh "?"
+yes_no: is_are | do_does
+wh: what | which
+is_are: ("Is" | "Are") entity verb
+do_does: ("Do" | "Does") entity or_relation
+what_of_relation: "What" ("is" | "are") "the" of_relation "that" or_relation
+what_type: "What" ("is" | "are") "the" type "that" or_relation
+what: what_of_relation | what_type
+which: "Which" type or_relation
+or_relation: and_relation
+           | or_relation ("or" | "or that") or_relation -> or_relation_concat
+and_relation: predicate_relation
+            | and_relation ("and" | "and that") and_relation -> and_relation_concat
+predicate_relation: active_quantified_of_relation | passive_quantified_of_relation | active_relation | passive_relation | active_quantified_relation | passive_quantified_relation
+active_of_relation: verb "the" of_relation
+active_relation_existence: verb ["with"] "the" entity
+active_unary_relation: ("is" | "are") verb
+active_relation: active_of_relation | active_relation_existence | active_unary_relation
+passive_relation_existence: ("is" | "are") verb ("by" | "to") "the" entity
+passive_of_relation: ("is" | "are") verb ("by" | "to") "the" of_relation
+passive_relation: passive_relation_existence | passive_of_relation
+!active_quantified_of_relation_operator: "at least" | "at most" | "more than" | "less than" | "exactly"
+active_quantified_of_relation: verb active_quantified_relation_operator positive_number of_relation
+!passive_quantified_of_relation_operator: "at least" | "at most" | "more than" | "less than" | "exactly"
+passive_quantified_of_relation: ("is" | "are") verb ("by" | "to") passive_quantified_relation_operator positive_number of_relation
+!active_quantified_relation_operator: "at least" | "at most" | "more than" | "less than" | "exactly"
+active_quantified_relation: verb active_quantified_relation_operator positive_number type
+!passive_quantified_relation_operator: "at least" | "at most" | "more than" | "less than" | "exactly"
+passive_quantified_relation: ("is" | "are") verb ("by" | "to") passive_quantified_relation_operator positive_number type

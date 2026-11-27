@@ -1,6 +1,7 @@
 # Column definition
 import csv
 from datetime import datetime
+from pathlib import Path
 
 from nl2cnl.evaluation.validator import is_syntax_valid
 from nl2cnl.model import PromptItem
@@ -42,7 +43,7 @@ def start_benchmark(args, processed_items: list[PromptItem]) -> None:
     """
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # TODO: Move this logic to loader.py
+    Path("./data/results").mkdir(parents=True, exist_ok=True)
     with open(f"./data/results/test-{timestamp}.csv", mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=columns)
 

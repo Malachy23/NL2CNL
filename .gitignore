@@ -16,5 +16,4 @@ results/*
 .env
 
 # Various
-grammar.lark
 data/results/*
