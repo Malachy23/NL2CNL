@@ -32,3 +32,8 @@ class PromptItem:
     nl_input: str
     expected_cnl: list[str] | None = None
     model_output: PromptResult | None = None
+
+class FatalLLMError(Exception):
+    """Raised by nl2cnl.llm when the model or API cannot be used at all (auth, wrong model, bad request).
+    It lives here, and not in llm.py, so that importing it does not load LiteLLM.
+    """

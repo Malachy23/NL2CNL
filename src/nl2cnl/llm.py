@@ -16,7 +16,7 @@ from litellm.exceptions import (
     Timeout,
 )
 
-from nl2cnl.model import PromptResult
+from nl2cnl.model import FatalLLMError, PromptResult
 
 litellm.suppress_debug_info = True
 litellm.set_verbose = False
@@ -36,9 +36,6 @@ RETRYABLE_ERRORS = (
     InternalServerError,
     APIConnectionError,
 )
-
-class FatalLLMError(Exception):
-    pass
 
 def prompt_model(
     model: str,
