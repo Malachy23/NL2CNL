@@ -48,7 +48,7 @@ def check_file_existence(path_str: str | Path) -> Path:
 
 
 def check_file_suffix(file: Path, expected_suffix: str) -> None:
-    if file.suffix not in expected_suffix:
+    if file.suffix != expected_suffix:
         raise InvalidArgumentError(f"File '{file.name}' has wrong suffix '{file.suffix}': expected {expected_suffix}.")
 
 
