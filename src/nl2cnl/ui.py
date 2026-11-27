@@ -33,6 +33,9 @@ class CliUI:
     def error(self, message: str) -> None:
         self.console.print(f"[bold red]✗[/] [red]{escape(message)}[/]")
 
+    def info(self, message: str) -> None:
+        self.console.print(f"[green]✓[/] {escape(message)}")
+
     @contextmanager
     def step(self, label: str) -> Iterator[None]:
         with self.console.status(f"[cyan]{label}...[/]", spinner="dots"):

@@ -63,7 +63,8 @@ def main():
     if config.benchmark is not None:
         from nl2cnl.evaluation.benchmark import start_benchmark
 
-        start_benchmark(config, items)
+        results_path = start_benchmark(config, items)
+        CliUI().info(f"Benchmark results saved to {results_path}")
 
     # --- OUTPUT
     if not config.no_output:
