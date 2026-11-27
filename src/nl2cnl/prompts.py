@@ -10,7 +10,7 @@ GRAMMAR INTERPRETATION AND APPLICATION
 4. YAML lists and pipe-separated expressions represent alternative production branches.
 5. Select the branch that best preserves the semantic meaning of the input while satisfying the grammar.
 6. Replace lexical placeholders with corresponding values extracted from the input.
-7. Infer only the minimum information strictly necessaryto satisfy required grammatical slots.
+7. Infer only the minimum information strictly necessary to satisfy required grammatical slots.
 8. Preserve the original meaning and do not invent entities, identifiers, values, or relationships.
 
 {examples}

@@ -14,10 +14,13 @@ def main():
     load_dotenv()
     args = parse_args()
 
-    # To deactivate if wanting to use updated (online) costs
+    # Uses LiteLLM's bundled price list instead of downloading it at every start.
+    # Remove this line to get up-to-date costs for very recent models.
     environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
+    # Skips the final garbage collection at exit, which is slow with torch/LiteLLM loaded
     register(freeze)
 
+    # Imported here, after parse_args(), so that --help and argument errors stay instant
     from nl2cnl.config import build_config
     from nl2cnl.formatter import format_input
     from nl2cnl.llm import prompt_model
@@ -51,10 +54,10 @@ def main():
             ]
             item.model_output = prompt_model(config.model, messages)
 
-            # Prints RETRIABLE_ERRORS
+            # Temporary errors: the item is kept (empty output) and the run continues
             error = item.model_output.error
             if error is not None:
-                CliUI().error(error)
+                CliUI().error(f"{item.id}: {error}")
     except FatalLLMError as e:
         CliUI().error(str(e))
         exit(2)

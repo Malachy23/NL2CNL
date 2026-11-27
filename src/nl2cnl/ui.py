@@ -18,7 +18,9 @@ T = TypeVar("T")
 
 
 class CliUI:
-    _instance: CliUI | None = None
+    """Single shared console (singleton): every CliUI() returns the same instance."""
+
+    _instance: "CliUI | None" = None
     console: Console
 
     def __new__(cls) -> "CliUI":

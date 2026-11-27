@@ -12,10 +12,11 @@ def parse_args() -> Namespace:
         ),
         epilog=(
             "Examples:\n"
-            "  Config file:    uv run nl2cnl -c configs/bioquery_raw.yaml\n"
-            "  Config + model: uv run nl2cnl -c configs/bioquery_raw.yaml -m groq/qwen/qwen3-32b\n"
-            "  Single query:   uv run nl2cnl -m ollama_chat/qwen3.5:4b -y example.yaml -t \"drugs related to asthma\"\n"
-            "  Benchmark run:  uv run nl2cnl -m openrouter/meta-llama/llama-3.3-70b-instruct:free -y example.yaml -b data/test_cases.json --no-output"
+            "  Config file:    uv run nl2cnl -c data/config/config_example.yaml\n"
+            "  Config + model: uv run nl2cnl -c data/config/config_example.yaml -m groq/qwen/qwen3-32b\n"
+            "  Single query:   uv run nl2cnl -m ollama_chat/qwen3.5:4b -y data/specifications/bioquery.yaml -t \"drugs related to asthma\"\n"
+            "  Example RAG:    uv run nl2cnl -m ollama_chat/qwen3.5:4b -y data/specifications/bioquery.yaml -s example -e data/examples/bioquery_examples.json -t \"drugs related to asthma\"\n"
+            "  Benchmark run:  uv run nl2cnl -m openrouter/meta-llama/llama-3.3-70b-instruct:free -y data/specifications/bioquery.yaml -b data/tests/test_cases.json --no-output"
         ),
         formatter_class=RawDescriptionHelpFormatter,
     )
