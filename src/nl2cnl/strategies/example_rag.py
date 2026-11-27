@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from numpy import argsort
 from sentence_transformers import SentenceTransformer
 from transformers.utils import logging
@@ -25,6 +26,12 @@ class ExampleRAGStrategy(SystemPromptStrategy):
         except OSError:  # Downloads it if not previously installed
             self.embedding_model = SentenceTransformer(EMBEDDING_MODEL, device="cpu")
 
+
+    def _load_specification(self, specification_path):
+        super()._load_specification(specification_path)
+
+    def _load_examples(self, examples_path):
+        super()._load_examples(examples_path)
 
     def setup(self, specification_path: Path, examples_path: Path | None) -> None:
         super().setup(specification_path, examples_path)

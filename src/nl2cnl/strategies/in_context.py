@@ -10,6 +10,11 @@ class InContextStrategy(SystemPromptStrategy):
     As such, once both are provided the system prompt remains the same no matter what the user prompt is.
     """
 
+    def _load_specification(self, specification_path):
+        super()._load_specification(specification_path)
+
+    def _load_examples(self, examples_path):
+        super()._load_examples(examples_path)
 
     def setup(self, specification_path: Path, examples_path: Path | None) -> None:
         super().setup(specification_path, examples_path)

@@ -10,6 +10,7 @@ from nl2cnl.strategies.base import StrategyOptions, SystemPromptStrategy
 _REGISTRY = {
     "inctx": "nl2cnl.strategies.in_context:InContextStrategy",
     "example": "nl2cnl.strategies.example_rag:ExampleRAGStrategy",
+    "subg": "nl2cnl.strategies.subgrammar_rag:SubgrammarRAGStrategy"
 }
 AVAILABLE_STRATEGIES = list(_REGISTRY)
 
