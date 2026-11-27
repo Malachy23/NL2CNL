@@ -5,8 +5,9 @@ from pathlib import Path
 from typing import Any
 
 from litellm import get_llm_provider, validate_environment
-from yaml import YAMLError, safe_load
+from yaml import YAMLError
 
+from nl2cnl.loaders import load_yaml
 from nl2cnl.strategies import AVAILABLE_STRATEGIES
 from nl2cnl.ui import CliUI
 
@@ -83,8 +84,7 @@ def extract_raw_config(args: Namespace) -> dict[str, Any]:
         check_file_suffix(cfg_path, ".yaml")
 
         try:
-            with open(cfg_path, "r", encoding="utf-8") as f:
-                loaded = safe_load(f) or {}
+            loaded = load_yaml(cfg_path) or {}  # An empty file gives None
         except YAMLError as e:
             raise InvalidArgumentError(f"Invalid YAML syntax in '{cfg_path.name}': {e}") from e
 

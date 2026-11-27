@@ -3,6 +3,8 @@ from json import load
 from pathlib import Path
 from typing import Any
 
+from yaml import safe_load
+
 
 def _load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as file:
@@ -13,6 +15,14 @@ def load_text(path: Path) -> str:
     """Returns the content of the file <path> in string format"""
     with path.open("r", encoding="utf-8") as file:
         return file.read()
+
+
+def load_yaml(path: Path) -> Any:
+    """Returns the content of the .yaml file <path>.
+    Usually a dict, but it can be any YAML value (None for an empty file): callers must check it.
+    """
+    with path.open("r", encoding="utf-8") as file:
+        return safe_load(file)
 
 
 def load_examples(path: Path | None) -> list[dict[str, str]]:
