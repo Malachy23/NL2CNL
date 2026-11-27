@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter
 
-AVAILABLE_STRATEGIES = ["inctx", "example", "subgrammar"]
+from nl2cnl.strategies import AVAILABLE_STRATEGIES
 
 
 def parse_args() -> Namespace:

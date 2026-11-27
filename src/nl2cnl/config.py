@@ -7,7 +7,7 @@ from typing import Any
 from litellm import get_llm_provider, validate_environment
 from yaml import YAMLError, safe_load
 
-from nl2cnl.cli import AVAILABLE_STRATEGIES
+from nl2cnl.strategies import AVAILABLE_STRATEGIES
 from nl2cnl.ui import CliUI
 
 LOCAL_PROVIDERS = {"ollama", "ollama_chat", "lm_studio", "llamacpp", "vllm"}
