@@ -1,27 +1,19 @@
-from json import load
-
 from nl2cnl.config import AppConfig
+from nl2cnl.loaders import load_test_cases, load_text
 from nl2cnl.model import PromptItem
 
 
-# Processes CLI argument in PromptItem format
-def format_input(config : AppConfig) -> list[PromptItem]:
-    items: list[PromptItem] = []
-
+def format_input(config: AppConfig) -> list[PromptItem]:
+    """Converts the chosen input source (-t, -i or -b) into a list of PromptItem"""
     if config.text is not None:
-        items.append(PromptItem("cli_01", config.text))
+        return [PromptItem(id="cli_01", nl_input=config.text)]
 
-    elif config.input is not None:
-        with open(config.input, "r", encoding="utf-8") as f:
-            for idx, line in enumerate(f):
-                if line.strip():
-                    items.append(PromptItem(id=f"in_{idx}", nl_input=line.strip()))
+    if config.input is not None:
+        lines = load_text(config.input).splitlines()
+        # idx is the line number in the file, so ids stay stable even with blank lines
+        return [PromptItem(id=f"in_{idx}", nl_input=line.strip()) for idx, line in enumerate(lines) if line.strip()]
 
-    # TODO: Maybe move file opening logic somewhere else. 
-    elif config.benchmark is not None:
-        with open(config.benchmark, "r", encoding="utf-8") as f:
-            data = load(f)
-            raw_tests = data["cases"] if isinstance(data, dict) else data
-            items = [PromptItem(**row) for row in raw_tests]
+    if config.benchmark is not None:
+        return [PromptItem(**case) for case in load_test_cases(config.benchmark)]
 
-    return items
+    return []
